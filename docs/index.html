@@ -68,7 +68,14 @@
       line-height: 1.4;
     }
     .legend strong { font-weight: 700; }
-    .scale-control {
+    .control-groups {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem 1.25rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .seg-control {
       display: flex;
       align-items: center;
       gap: 0.6rem;
@@ -139,7 +146,10 @@
       align-items: center;
     }
 
-    .stat { text-align: center; }
+    .stat { text-align: center; padding: 0.25rem 0.5rem; border-radius: 8px; }
+    /* Highlight the column the standings are currently sorted by. */
+    .stat.sorted, .win-prob-cell.sorted { background: rgba(42,82,152,0.08); }
+    .stat.sorted .stat-label, .win-prob-cell.sorted .stat-label { color: var(--brand); font-weight: 700; }
     .stat-label {
       font-size: 0.72rem; color: var(--muted);
       text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;
@@ -285,6 +295,28 @@
       );
     }
 
+    // Reusable segmented pill toggle.
+    function SegToggle({ label, value, options, onChange, ariaLabel }) {
+      return (
+        <div className="seg-control">
+          <span className="controls-label">{label}</span>
+          <div className="toggle" role="group" aria-label={ariaLabel || label}>
+            {options.map(o => (
+              <button
+                key={o.value}
+                type="button"
+                className={"toggle-btn" + (value === o.value ? " active" : "")}
+                aria-pressed={value === o.value}
+                onClick={() => onChange(o.value)}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     function WinProb({ value, className }) {
       return (
         <div className={"win-prob-cell stat " + (className || "")}>
@@ -294,11 +326,12 @@
       );
     }
 
-    function PlayerRow({ player, rank, history, scaleMode }) {
+    function PlayerRow({ player, rank, history, scaleMode, sortKey }) {
       const d = player.deltaPct;
       const deltaClass = d > 0 ? "delta-up" : d < 0 ? "delta-down" : "delta-neutral";
       const deltaSymbol = d > 0 ? "📈" : d < 0 ? "📉" : "➡️";
       const sign = d > 0 ? "+" : "";
+      const sortedCls = key => (sortKey === key ? " sorted" : "");
 
       return (
         <div className="player-row">
@@ -322,13 +355,13 @@
           <Sparkline player={player.name} history={history} scaleMode={scaleMode} />
 
           <div className="stats">
-            <WinProb value={player.winPct} />
-            <div className="stat" title="Pool points earned so far, and goal differential so far">
+            <WinProb value={player.winPct} className={sortedCls("winPct").trim()} />
+            <div className={"stat" + sortedCls("currentPts")} title="Pool points earned so far, and goal differential so far">
               <div className="stat-label">Current</div>
               <div className="stat-value">{player.currentPts}<span className="unit"> pts</span></div>
               <div className="stat-secondary">{fmtSigned(player.currentGd)} GD</div>
             </div>
-            <div className="stat" title="Projected average pool points across all simulations, and average goal differential">
+            <div className={"stat" + sortedCls("avgPts")} title="Projected average pool points across all simulations, and average goal differential">
               <div className="stat-label">Projected</div>
               <div className="stat-value">{player.avgPts.toFixed(1)}<span className="unit"> pts</span></div>
               <div className="stat-secondary">{fmtSigned(player.avgGd, 1)} GD</div>
@@ -352,8 +385,13 @@
       const [scaleMode, setScaleMode] = useState(
         () => localStorage.getItem("sparkScale") || "global"
       );
+      // Standings sort key: "currentPts" | "avgPts" | "winPct". Remembered.
+      const [sortKey, setSortKey] = useState(
+        () => localStorage.getItem("sortKey") || "currentPts"
+      );
 
       useEffect(() => { localStorage.setItem("sparkScale", scaleMode); }, [scaleMode]);
+      useEffect(() => { localStorage.setItem("sortKey", sortKey); }, [sortKey]);
 
       const load = useCallback(async () => {
         try {
@@ -388,7 +426,10 @@
       }, [load]);
 
       const title = results?.title || "World Cup Pool";
-      const players = results?.players || [];
+      // Sort a copy descending by the chosen key; ties fall back to win %.
+      const players = [...(results?.players || [])].sort((a, b) =>
+        (b[sortKey] - a[sortKey]) || (b.winPct - a.winPct)
+      );
 
       return (
         <div className="container">
@@ -417,26 +458,28 @@
               <strong>Pts</strong> = pool points · <strong>GD</strong> = goal differential ·
               <strong> Current</strong> = so far · <strong>Projected</strong> = simulated average
             </span>
-            <div className="scale-control">
-              <span className="controls-label">Sparkline scale</span>
-              <div className="toggle" role="group" aria-label="Sparkline scale">
-              <button
-                type="button"
-                className={"toggle-btn" + (scaleMode === "global" ? " active" : "")}
-                aria-pressed={scaleMode === "global"}
-                onClick={() => setScaleMode("global")}
-              >
-                Global 0–100
-              </button>
-              <button
-                type="button"
-                className={"toggle-btn" + (scaleMode === "perPlayer" ? " active" : "")}
-                aria-pressed={scaleMode === "perPlayer"}
-                onClick={() => setScaleMode("perPlayer")}
-              >
-                Per player
-              </button>
-              </div>
+            <div className="control-groups">
+              <SegToggle
+                label="Sort by"
+                ariaLabel="Sort standings by"
+                value={sortKey}
+                onChange={setSortKey}
+                options={[
+                  { value: "currentPts", label: "Current pts" },
+                  { value: "avgPts", label: "Projected pts" },
+                  { value: "winPct", label: "Win %" },
+                ]}
+              />
+              <SegToggle
+                label="Sparkline scale"
+                ariaLabel="Sparkline scale"
+                value={scaleMode}
+                onChange={setScaleMode}
+                options={[
+                  { value: "global", label: "Global 0–100" },
+                  { value: "perPlayer", label: "Per player" },
+                ]}
+              />
             </div>
           </div>
 
@@ -444,7 +487,8 @@
             {!results && !error && <div className="loading loading-screen">Loading standings…</div>}
             {results && players.length === 0 && <div className="empty">No player data available.</div>}
             {players.map((p, i) => (
-              <PlayerRow key={p.name} player={p} rank={i + 1} history={history} scaleMode={scaleMode} />
+              <PlayerRow key={p.name} player={p} rank={i + 1} history={history}
+                         scaleMode={scaleMode} sortKey={sortKey} />
             ))}
           </div>
         </div>
