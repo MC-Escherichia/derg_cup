@@ -4,436 +4,354 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Cup Pool — Live Probabilities</title>
+
+  <!-- React (no build step: CDN UMD + Babel standalone for JSX) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --brand: #1e3c72;
+      --brand-light: #2a5298;
+      --up: #22c55e;
+      --down: #ef4444;
+      --muted: #999;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
       color: #333;
       min-height: 100vh;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1200px; margin: 0 auto; }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: white;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      opacity: 0.9;
-      margin-bottom: 0.5rem;
-    }
+    header { text-align: center; margin-bottom: 1.5rem; color: white; }
+    h1 { font-size: 2.2rem; margin-bottom: 0.4rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
 
     .meta {
-      font-size: 0.9rem;
-      opacity: 0.8;
+      font-size: 0.85rem;
+      opacity: 0.85;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.75rem;
+      justify-content: center;
     }
+    .meta span { white-space: nowrap; }
 
     .standings {
       background: white;
       border-radius: 12px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
       overflow: hidden;
-      margin-bottom: 2rem;
     }
 
+    /* ---- Player row: desktop grid, mobile stacked card ---- */
     .player-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 2.5rem minmax(0, 1fr) 130px auto;
       align-items: center;
-      padding: 1.5rem;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid #eee;
-      gap: 1.5rem;
       transition: background 0.2s;
     }
+    .player-row:hover { background: #f8f9fa; }
+    .player-row:last-child { border-bottom: none; }
 
-    .player-row:hover {
-      background: #f8f9fa;
-    }
+    .rank { font-size: 1.5rem; font-weight: bold; color: var(--brand); text-align: center; }
 
-    .player-row:last-child {
-      border-bottom: none;
-    }
+    .player-info { min-width: 0; }
+    .player-name { font-size: 1.1rem; font-weight: 600; color: #222; margin-bottom: 0.4rem; }
 
-    .rank {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #1e3c72;
-      min-width: 2.5rem;
-      text-align: center;
-    }
-
-    .player-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .player-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #222;
-      margin-bottom: 0.3rem;
-    }
-
-    .teams {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
+    .teams { display: flex; gap: 0.4rem; flex-wrap: wrap; }
     .team-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: #f0f0f0;
-      padding: 0.3rem 0.7rem;
-      border-radius: 16px;
-      font-size: 0.85rem;
-      color: #555;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: #f0f0f0; padding: 0.25rem 0.6rem;
+      border-radius: 16px; font-size: 0.82rem; color: #555;
     }
+    .team-flag { font-size: 1.05rem; }
 
-    .team-flag {
-      font-size: 1.1rem;
-    }
+    .sparkline { width: 100%; }
+    .sparkline svg { width: 100%; height: 44px; display: block; }
 
     .stats {
       display: flex;
-      gap: 2rem;
-      min-width: 500px;
+      gap: 1.5rem;
       justify-content: flex-end;
       align-items: center;
     }
 
-    .win-prob {
-      text-align: center;
-      margin-right: 0.5rem;
-    }
-
-    .win-prob-label {
-      font-size: 0.8rem;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.3rem;
-    }
-
-    .win-prob-value {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #1e3c72;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
+    .stat { text-align: center; }
     .stat-label {
-      font-size: 0.75rem;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.2rem;
+      font-size: 0.72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;
     }
+    .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--brand); }
+    .stat-value.big { font-size: 2rem; }
+    .stat-secondary { font-size: 0.8rem; color: #666; margin-top: 0.15rem; }
 
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #1e3c72;
-    }
+    .delta-up { color: var(--up); }
+    .delta-down { color: var(--down); }
+    .delta-neutral { color: var(--muted); }
 
-    .stat-secondary {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 0.15rem;
-    }
-
-    .stat-delta {
-      font-size: 0.9rem;
-      margin-top: 0.2rem;
-      font-weight: 600;
-    }
-
-    .delta-up {
-      color: #22c55e;
-    }
-
-    .delta-down {
-      color: #ef4444;
-    }
-
-    .delta-neutral {
-      color: #999;
-    }
-
-    .sparkline-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-shrink: 0;
-      min-width: 120px;
-    }
-
-    svg {
-      height: 40px;
-      flex-grow: 1;
-      min-width: 80px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 3rem;
-      color: white;
-      font-size: 1.2rem;
-    }
+    .loading, .empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 1.1rem; }
+    .loading-screen { color: white; }
 
     .error {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
+      background: #fee2e2; color: #991b1b;
+      padding: 1rem; border-radius: 8px; margin-bottom: 1rem;
     }
 
+    /* ---------- Tablet ---------- */
     @media (max-width: 1024px) {
-      .stats {
-        min-width: 350px;
-        gap: 1.2rem;
-      }
-
-      .win-prob-value {
-        font-size: 1.7rem;
-      }
+      .player-row { grid-template-columns: 2.5rem minmax(0, 1fr) 110px auto; gap: 1rem; }
+      .stats { gap: 1rem; }
+      .stat-value.big { font-size: 1.6rem; }
     }
 
-    @media (max-width: 768px) {
+    /* ---------- Mobile: stacked card layout ---------- */
+    @media (max-width: 680px) {
+      body { padding: 1rem 0.6rem; }
+      h1 { font-size: 1.7rem; }
+
       .player-row {
-        flex-direction: column;
-        gap: 1rem;
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas:
+          "rank name win"
+          "spark spark spark"
+          "stats stats stats";
+        gap: 0.6rem 0.75rem;
+        padding: 1rem;
       }
+
+      .rank { grid-area: rank; font-size: 1.3rem; align-self: center; }
+      .player-info { grid-area: name; align-self: center; }
+      .player-name { margin-bottom: 0.35rem; }
+
+      .win-prob-cell {
+        grid-area: win;
+        text-align: right;
+        align-self: center;
+      }
+
+      .sparkline { grid-area: spark; }
 
       .stats {
-        width: 100%;
-        justify-content: space-around;
-        gap: 1rem;
-        min-width: unset;
+        grid-area: stats;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid #f0f0f0;
       }
+      /* On mobile the win % lives in its own header cell, hide the duplicate stat */
+      .stats .win-prob-cell { display: none; }
+      .stat { flex: 1; }
+      .stat-value.big { font-size: 1.3rem; }
+    }
 
-      .sparkline-container {
-        width: 100%;
-        min-width: unset;
-        order: -1;
-        margin-bottom: 0.5rem;
-      }
-
-      .win-prob {
-        min-width: 60px;
-      }
-
-      .win-prob-value {
-        font-size: 1.5rem;
-      }
-
-      .stat-label {
-        font-size: 0.7rem;
-      }
-
-      .stat-value {
-        font-size: 1rem;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-      }
+    /* On desktop/tablet the header win cell is hidden; win% shows inside .stats */
+    @media (min-width: 681px) {
+      .win-prob-header { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>⚽ World Cup Pool</h1>
-      <div class="subtitle">Live Win Probability Tracker</div>
-      <div class="meta">
-        <span id="matchesPlayed">Matches played: —</span> •
-        <span id="lastUpdated">Last updated: —</span> •
-        <span id="simCount">20,000 simulations</span>
-      </div>
-    </header>
+  <div id="root"></div>
 
-    <div id="error"></div>
-    <div id="standings" class="standings">
-      <div class="loading">Loading standings...</div>
-    </div>
-  </div>
+  <script type="text/babel" data-presets="react">
+    const { useState, useEffect, useCallback } = React;
 
-  <script>
-    async function loadData() {
-      try {
-        const [resultsRes, historyRes] = await Promise.all([
-          fetch('results.json'),
-          fetch('history.json')
-        ]);
+    const SPARK_W = 100;
+    const SPARK_H = 44;
+    const SPARK_PAD = 3;
 
-        if (!resultsRes.ok || !historyRes.ok) {
-          throw new Error('Failed to load data files');
+    // Build a sparkline on a FIXED 0–100 win-% scale so every player is comparable.
+    function Sparkline({ player, history }) {
+      const series = (history || [])
+        .map(h => (h.w && typeof h.w[player] === "number") ? h.w[player] : null)
+        .filter(v => v !== null);
+
+      // A unique, CSS/SVG-safe id (player names contain "&", spaces, etc.).
+      const safeId = "spark-" + player.replace(/[^a-zA-Z0-9]/g, "-");
+
+      if (series.length === 0) {
+        return <div className="sparkline"><svg viewBox={`0 0 ${SPARK_W} ${SPARK_H}`} /></div>;
+      }
+
+      const usable = SPARK_H - SPARK_PAD * 2;
+      const yFor = v => SPARK_H - SPARK_PAD - (Math.max(0, Math.min(100, v)) / 100) * usable;
+
+      // Single data point: render a flat segment so there is still something to see.
+      const pts = series.length === 1
+        ? [{ x: SPARK_PAD, y: yFor(series[0]) }, { x: SPARK_W - SPARK_PAD, y: yFor(series[0]) }]
+        : series.map((v, i) => ({
+            x: SPARK_PAD + i * ((SPARK_W - SPARK_PAD * 2) / (series.length - 1)),
+            y: yFor(v),
+          }));
+
+      const line = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" ");
+      const last = pts[pts.length - 1];
+      const area = `${line} L ${last.x.toFixed(2)} ${SPARK_H} L ${SPARK_PAD} ${SPARK_H} Z`;
+
+      return (
+        <div className="sparkline">
+          <svg viewBox={`0 0 ${SPARK_W} ${SPARK_H}`} preserveAspectRatio="none"
+               role="img" aria-label={`Win probability trend for ${player}`}>
+            <defs>
+              <linearGradient id={safeId} x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="var(--brand-light)" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="var(--brand-light)" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={area} fill={`url(#${safeId})`} />
+            <path d={line} stroke="var(--brand-light)" strokeWidth="1.5" fill="none"
+                  vectorEffect="non-scaling-stroke" />
+            <circle cx={last.x} cy={last.y} r="2.2" fill="var(--brand)" />
+          </svg>
+        </div>
+      );
+    }
+
+    function WinProb({ value, className }) {
+      return (
+        <div className={"win-prob-cell stat " + (className || "")}>
+          <div className="stat-label">Win %</div>
+          <div className="stat-value big">{value.toFixed(1)}%</div>
+        </div>
+      );
+    }
+
+    function PlayerRow({ player, rank, history }) {
+      const d = player.deltaPct;
+      const deltaClass = d > 0 ? "delta-up" : d < 0 ? "delta-down" : "delta-neutral";
+      const deltaSymbol = d > 0 ? "📈" : d < 0 ? "📉" : "➡️";
+      const sign = d > 0 ? "+" : "";
+
+      return (
+        <div className="player-row">
+          <div className="rank">{rank}</div>
+
+          <div className="player-info">
+            <div className="player-name">{player.name}</div>
+            <div className="teams">
+              {player.teams.map((team, i) => (
+                <span className="team-badge" key={team + i}>
+                  <span className="team-flag">{player.flags[i] || "🏳️"}</span>
+                  <span>{team}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile-only header win % (top-right of card) */}
+          <WinProb value={player.winPct} className="win-prob-header" />
+
+          <Sparkline player={player.name} history={history} />
+
+          <div className="stats">
+            <WinProb value={player.winPct} />
+            <div className="stat">
+              <div className="stat-label">Current</div>
+              <div className="stat-value">{player.currentPts}</div>
+              <div className="stat-secondary">{player.currentGd > 0 ? "+" : ""}{player.currentGd}</div>
+            </div>
+            <div className="stat">
+              <div className="stat-label">Avg</div>
+              <div className="stat-value">{player.avgPts.toFixed(1)}</div>
+              <div className="stat-secondary">{player.avgGd > 0 ? "+" : ""}{player.avgGd.toFixed(1)}</div>
+            </div>
+            <div className="stat">
+              <div className="stat-label">Change</div>
+              <div className={"stat-value stat-delta " + deltaClass}>
+                {deltaSymbol} {sign}{d.toFixed(1)}%
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [results, setResults] = useState(null);
+      const [history, setHistory] = useState([]);
+      const [error, setError] = useState(null);
+
+      const load = useCallback(async () => {
+        try {
+          // Cache-bust so GitHub Pages' CDN can't serve a stale data file.
+          const bust = `?t=${Date.now()}`;
+          const [resultsRes, historyRes] = await Promise.all([
+            fetch("results.json" + bust),
+            fetch("history.json" + bust),
+          ]);
+          if (!resultsRes.ok) throw new Error("Failed to load results.json");
+
+          const resultsData = await resultsRes.json();
+          // History is best-effort; an empty/missing file just hides the trend.
+          let historyData = [];
+          if (historyRes.ok) {
+            try { historyData = await historyRes.json(); } catch (_) { historyData = []; }
+          }
+
+          setResults(resultsData);
+          setHistory(Array.isArray(historyData) ? historyData : []);
+          setError(null);
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
         }
+      }, []);
 
-        const results = await resultsRes.json();
-        const history = await historyRes.json();
+      useEffect(() => {
+        load();
+        const id = setInterval(load, 5 * 60 * 1000); // refresh every 5 min
+        return () => clearInterval(id);
+      }, [load]);
 
-        renderStandings(results, history);
-        updateMeta(results);
-      } catch (err) {
-        document.getElementById('error').innerHTML = `
-          <div class="error">
-            <strong>Error:</strong> ${err.message}. Make sure results.json and history.json exist in this directory.
+      const title = results?.title || "World Cup Pool";
+      const players = results?.players || [];
+
+      return (
+        <div className="container">
+          <header>
+            <h1>⚽ {title}</h1>
+            <div className="subtitle">Live Win Probability Tracker</div>
+            <div className="meta">
+              <span>Matches played: {results ? results.matchesPlayed : "—"}</span>
+              <span>•</span>
+              <span>
+                Last updated: {results ? new Date(results.generatedAt).toLocaleString() : "—"}
+              </span>
+              <span>•</span>
+              <span>{results ? results.nSims.toLocaleString() : "—"} simulations</span>
+            </div>
+          </header>
+
+          {error && (
+            <div className="error">
+              <strong>Error:</strong> {error}. Make sure results.json exists in this directory.
+            </div>
+          )}
+
+          <div className="standings">
+            {!results && !error && <div className="loading loading-screen">Loading standings…</div>}
+            {results && players.length === 0 && <div className="empty">No player data available.</div>}
+            {players.map((p, i) => (
+              <PlayerRow key={p.name} player={p} rank={i + 1} history={history} />
+            ))}
           </div>
-        `;
-        console.error(err);
-      }
+        </div>
+      );
     }
 
-    function updateMeta(results) {
-      document.getElementById('matchesPlayed').textContent =
-        `Matches played: ${results.matchesPlayed}`;
-      document.getElementById('simCount').textContent =
-        `${results.nSims.toLocaleString()} simulations`;
-
-      const date = new Date(results.generatedAt);
-      document.getElementById('lastUpdated').textContent =
-        `Last updated: ${date.toLocaleString()}`;
-    }
-
-    function createSparkline(player, history) {
-      if (!history || history.length < 2) {
-        return '<svg></svg>';
-      }
-
-      const data = history.map(h => h.w[player] || 0);
-      const maxValue = Math.max(...data);
-      const minValue = Math.min(...data);
-      const range = maxValue - minValue || 1;
-
-      const width = 100;
-      const height = 40;
-      const padding = 2;
-      const pointSpacing = (width - padding * 2) / (data.length - 1);
-
-      const points = data.map((val, i) => {
-        const x = padding + i * pointSpacing;
-        const y = height - padding - ((val - minValue) / range) * (height - padding * 2);
-        return { x, y, val };
-      });
-
-      let pathD = `M ${points[0].x} ${points[0].y}`;
-      for (let i = 1; i < points.length; i++) {
-        pathD += ` L ${points[i].x} ${points[i].y}`;
-      }
-
-      const lastPoint = points[points.length - 1];
-      const lastVal = data[data.length - 1];
-
-      return `
-        <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="grad-${player}" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#2a5298;stop-opacity:0.3" />
-              <stop offset="100%" style="stop-color:#2a5298;stop-opacity:0" />
-            </linearGradient>
-          </defs>
-          <path d="${pathD} L ${lastPoint.x} ${height} L ${padding} ${height} Z"
-                fill="url(#grad-${player})" />
-          <path d="${pathD}" stroke="#2a5298" stroke-width="1.5" fill="none" />
-          <circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="2" fill="#1e3c72" />
-        </svg>
-      `;
-    }
-
-    function renderStandings(results, history) {
-      const standingsDiv = document.getElementById('standings');
-
-      if (!results.players || results.players.length === 0) {
-        standingsDiv.innerHTML = '<div class="loading">No player data available.</div>';
-        return;
-      }
-
-      let html = '';
-      results.players.forEach((player, rank) => {
-        const deltaClass = player.deltaPct > 0 ? 'delta-up' :
-                          player.deltaPct < 0 ? 'delta-down' : 'delta-neutral';
-        const deltaSign = player.deltaPct > 0 ? '+' : '';
-        const deltaSymbol = player.deltaPct > 0 ? '📈' :
-                           player.deltaPct < 0 ? '📉' : '➡️';
-
-        const sparkline = createSparkline(player.name, history);
-
-        html += `
-          <div class="player-row">
-            <div class="rank">${rank + 1}</div>
-            <div class="player-info">
-              <div class="player-name">${player.name}</div>
-              <div class="teams">
-                ${player.teams.map((team, i) => `
-                  <div class="team-badge">
-                    <span class="team-flag">${player.flags[i] || '🏳️'}</span>
-                    <span>${team}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-            <div class="sparkline-container">
-              ${sparkline}
-            </div>
-            <div class="stats">
-              <div class="win-prob">
-                <div class="win-prob-label">Win %</div>
-                <div class="win-prob-value">${player.winPct.toFixed(1)}%</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Current</div>
-                <div class="stat-value">${player.currentPts}</div>
-                <div class="stat-secondary">${player.currentGd > 0 ? '+' : ''}${player.currentGd}</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Avg</div>
-                <div class="stat-value">${player.avgPts.toFixed(1)}</div>
-                <div class="stat-secondary">${player.avgGd > 0 ? '+' : ''}${player.avgGd.toFixed(1)}</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Change</div>
-                <div class="stat-value stat-delta ${deltaClass}">
-                  ${deltaSymbol} ${deltaSign}${player.deltaPct.toFixed(1)}%
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      standingsDiv.innerHTML = html;
-    }
-
-    // Load data on page load
-    loadData();
-
-    // Auto-refresh every 5 minutes
-    setInterval(loadData, 5 * 60 * 1000);
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
 </html>
