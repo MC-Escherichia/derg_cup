@@ -52,6 +52,57 @@
       overflow: hidden;
     }
 
+    /* ---- Controls bar (sparkline scale toggle) ---- */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+      color: white;
+      flex-wrap: wrap;
+    }
+    .legend {
+      font-size: 0.82rem;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    .legend strong { font-weight: 700; }
+    .scale-control {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .controls-label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .toggle {
+      display: inline-flex;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 0.2rem;
+    }
+    .toggle-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toggle-btn.active {
+      background: white;
+      color: var(--brand);
+      font-weight: 600;
+    }
+    .toggle-btn:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+
     /* ---- Player row: desktop grid, mobile stacked card ---- */
     .player-row {
       display: grid;
@@ -94,6 +145,7 @@
       text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;
     }
     .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--brand); }
+    .stat-value .unit { font-size: 0.7rem; font-weight: 600; color: var(--muted); }
     .stat-value.big { font-size: 2rem; }
     .stat-secondary { font-size: 0.8rem; color: #666; margin-top: 0.15rem; }
 
@@ -120,6 +172,8 @@
     @media (max-width: 680px) {
       body { padding: 1rem 0.6rem; }
       h1 { font-size: 1.7rem; }
+
+      .controls { justify-content: center; }
 
       .player-row {
         grid-template-columns: auto 1fr auto;
@@ -172,8 +226,13 @@
     const SPARK_H = 44;
     const SPARK_PAD = 3;
 
-    // Build a sparkline on a FIXED 0–100 win-% scale so every player is comparable.
-    function Sparkline({ player, history }) {
+    // Format a goal differential with an explicit + / − sign.
+    const fmtSigned = (v, digits = 0) => (v > 0 ? "+" : "") + v.toFixed(digits);
+
+    // Build a sparkline. "global" mode uses a fixed 0–100 win-% scale so every
+    // player is comparable; "perPlayer" mode auto-scales to each player's own
+    // min/max so small swings stay legible.
+    function Sparkline({ player, history, scaleMode }) {
       const series = (history || [])
         .map(h => (h.w && typeof h.w[player] === "number") ? h.w[player] : null)
         .filter(v => v !== null);
@@ -186,7 +245,14 @@
       }
 
       const usable = SPARK_H - SPARK_PAD * 2;
-      const yFor = v => SPARK_H - SPARK_PAD - (Math.max(0, Math.min(100, v)) / 100) * usable;
+      let lo = 0, hi = 100;
+      if (scaleMode === "perPlayer") {
+        lo = Math.min(...series);
+        hi = Math.max(...series);
+        if (hi === lo) { lo -= 0.5; hi += 0.5; } // flat series: center the line
+      }
+      const range = hi - lo;
+      const yFor = v => SPARK_H - SPARK_PAD - ((Math.max(lo, Math.min(hi, v)) - lo) / range) * usable;
 
       // Single data point: render a flat segment so there is still something to see.
       const pts = series.length === 1
@@ -228,7 +294,7 @@
       );
     }
 
-    function PlayerRow({ player, rank, history }) {
+    function PlayerRow({ player, rank, history, scaleMode }) {
       const d = player.deltaPct;
       const deltaClass = d > 0 ? "delta-up" : d < 0 ? "delta-down" : "delta-neutral";
       const deltaSymbol = d > 0 ? "📈" : d < 0 ? "📉" : "➡️";
@@ -253,19 +319,19 @@
           {/* Mobile-only header win % (top-right of card) */}
           <WinProb value={player.winPct} className="win-prob-header" />
 
-          <Sparkline player={player.name} history={history} />
+          <Sparkline player={player.name} history={history} scaleMode={scaleMode} />
 
           <div className="stats">
             <WinProb value={player.winPct} />
-            <div className="stat">
+            <div className="stat" title="Pool points earned so far, and goal differential so far">
               <div className="stat-label">Current</div>
-              <div className="stat-value">{player.currentPts}</div>
-              <div className="stat-secondary">{player.currentGd > 0 ? "+" : ""}{player.currentGd}</div>
+              <div className="stat-value">{player.currentPts}<span className="unit"> pts</span></div>
+              <div className="stat-secondary">{fmtSigned(player.currentGd)} GD</div>
             </div>
-            <div className="stat">
-              <div className="stat-label">Avg</div>
-              <div className="stat-value">{player.avgPts.toFixed(1)}</div>
-              <div className="stat-secondary">{player.avgGd > 0 ? "+" : ""}{player.avgGd.toFixed(1)}</div>
+            <div className="stat" title="Projected average pool points across all simulations, and average goal differential">
+              <div className="stat-label">Projected</div>
+              <div className="stat-value">{player.avgPts.toFixed(1)}<span className="unit"> pts</span></div>
+              <div className="stat-secondary">{fmtSigned(player.avgGd, 1)} GD</div>
             </div>
             <div className="stat">
               <div className="stat-label">Change</div>
@@ -282,6 +348,12 @@
       const [results, setResults] = useState(null);
       const [history, setHistory] = useState([]);
       const [error, setError] = useState(null);
+      // Sparkline y-axis: "global" (0–100) or "perPlayer" (auto-scaled). Remembered.
+      const [scaleMode, setScaleMode] = useState(
+        () => localStorage.getItem("sparkScale") || "global"
+      );
+
+      useEffect(() => { localStorage.setItem("sparkScale", scaleMode); }, [scaleMode]);
 
       const load = useCallback(async () => {
         try {
@@ -340,11 +412,39 @@
             </div>
           )}
 
+          <div className="controls">
+            <span className="legend">
+              <strong>Pts</strong> = pool points · <strong>GD</strong> = goal differential ·
+              <strong> Current</strong> = so far · <strong>Projected</strong> = simulated average
+            </span>
+            <div className="scale-control">
+              <span className="controls-label">Sparkline scale</span>
+              <div className="toggle" role="group" aria-label="Sparkline scale">
+              <button
+                type="button"
+                className={"toggle-btn" + (scaleMode === "global" ? " active" : "")}
+                aria-pressed={scaleMode === "global"}
+                onClick={() => setScaleMode("global")}
+              >
+                Global 0–100
+              </button>
+              <button
+                type="button"
+                className={"toggle-btn" + (scaleMode === "perPlayer" ? " active" : "")}
+                aria-pressed={scaleMode === "perPlayer"}
+                onClick={() => setScaleMode("perPlayer")}
+              >
+                Per player
+              </button>
+              </div>
+            </div>
+          </div>
+
           <div className="standings">
             {!results && !error && <div className="loading loading-screen">Loading standings…</div>}
             {results && players.length === 0 && <div className="empty">No player data available.</div>}
             {players.map((p, i) => (
-              <PlayerRow key={p.name} player={p} rank={i + 1} history={history} />
+              <PlayerRow key={p.name} player={p} rank={i + 1} history={history} scaleMode={scaleMode} />
             ))}
           </div>
         </div>
