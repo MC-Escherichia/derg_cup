@@ -1,0 +1,78 @@
+# .github/workflows/sim.yml
+# Runs the pool simulation and publishes docs/ (index.html + results.json) to
+# GitHub Pages. No server, no commits back to the repo.
+#
+# Triggers:
+#   - manual ("Run workflow" button)
+#   - push to main that changes the sim, the page, or this workflow
+#     (i.e. when you've entered new results / refreshed the Elo dump and pushed)
+#   - optional schedule (left commented; only useful once Elo fetching is automated)
+
+name: pool-sim
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *"    # every 3 hours (UTC) — pulls fresh scores on its own
+  push:
+    branches: [main]
+    paths:
+      - "wc_pool_sim.py"
+      - "fetch_results.py"
+      - "pool.json"
+      - "ratings.json"
+      - "docs/index.html"
+      - ".github/workflows/sim.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install numpy
+
+      # Pull the latest group-stage scores into pool.json (no API key).
+      # Non-destructive: if the source is unreachable, the committed pool.json is used.
+      - name: Fetch latest results
+        run: python fetch_results.py pool.json
+
+      # Best-effort: pull the previously published history so trends persist
+      # across runs without committing anything back. 404 on first run is fine.
+      - name: Rehydrate history
+        run: |
+          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/history.json"
+          curl -fsSL "$URL" -o docs/history.json || echo "[]" > docs/history.json
+
+      - name: Run simulation
+        env:
+          RESULTS_JSON: docs/results.json
+          HISTORY_JSON: docs/history.json
+        run: python wc_pool_sim.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

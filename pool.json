@@ -1,0 +1,371 @@
+{
+  "_README": "Single config for the pool. Replace players + groups with your real pool. Group A is the actual 2026 draw; B-L here are ILLUSTRATIVE placeholders \u2014 paste the official draw. Each player lists 3 teams [top16, mid16, bot16]. Record played group games in 'results' and knockout games in 'koResults'.",
+  "title": "The Group Chat Cup",
+  "players": {
+    "NH": [
+      "Argentina",
+      "Norway",
+      "Scotland"
+    ],
+    "SC": [
+      "Germany",
+      "Australia",
+      "Saudi Arabia"
+    ],
+    "MS": [
+      "Mexico",
+      "Iran",
+      "Qatar"
+    ],
+    "RP": [
+      "Belgium",
+      "South Korea",
+      "DR Congo"
+    ],
+    "JR": [
+      "Croatia",
+      "Sweden",
+      "Cape Verde"
+    ],
+    "PB": [
+      "Portugal",
+      "Austria",
+      "Ghana"
+    ],
+    "NC": [
+      "France",
+      "Turkey",
+      "Bosnia and Herzegovina"
+    ],
+    "JF": [
+      "Uruguay",
+      "Ivory Coast",
+      "Czechia"
+    ],
+    "JH": [
+      "United States",
+      "Panama",
+      "Haiti"
+    ],
+    "ER": [
+      "Morocco",
+      "Japan",
+      "Jordan"
+    ],
+    "BS": [
+      "Brazil",
+      "Canada",
+      "South Africa"
+    ],
+    "PB2": [
+      "Spain",
+      "Switzerland",
+      "Tunisia"
+    ],
+    "DD": [
+      "Netherlands",
+      "Egypt",
+      "Cura\u00e7ao"
+    ],
+    "KR": [
+      "England",
+      "Paraguay",
+      "New Zealand"
+    ],
+    "M&M": [
+      "Colombia",
+      "Ecuador",
+      "Iraq"
+    ],
+    "MC": [
+      "Senegal",
+      "Algeria",
+      "Uzbekistan"
+    ]
+  },
+  "groups": {
+    "A": [
+      "Mexico",
+      "South Korea",
+      "Czechia",
+      "South Africa"
+    ],
+    "B": [
+      "Qatar",
+      "Bosnia and Herzegovina",
+      "Canada",
+      "Switzerland"
+    ],
+    "C": [
+      "Scotland",
+      "Morocco",
+      "Brazil",
+      "Haiti"
+    ],
+    "D": [
+      "Australia",
+      "Turkey",
+      "United States",
+      "Paraguay"
+    ],
+    "E": [
+      "Germany",
+      "Ivory Coast",
+      "Cura\u00e7ao",
+      "Ecuador"
+    ],
+    "F": [
+      "Sweden",
+      "Japan",
+      "Tunisia",
+      "Netherlands"
+    ],
+    "G": [
+      "Iran",
+      "Belgium",
+      "Egypt",
+      "New Zealand"
+    ],
+    "H": [
+      "Spain",
+      "Uruguay",
+      "Saudi Arabia",
+      "Cape Verde"
+    ],
+    "I": [
+      "Norway",
+      "France",
+      "Iraq",
+      "Senegal"
+    ],
+    "J": [
+      "Argentina",
+      "Austria",
+      "Jordan",
+      "Algeria"
+    ],
+    "K": [
+      "DR Congo",
+      "Portugal",
+      "Colombia",
+      "Uzbekistan"
+    ],
+    "L": [
+      "Croatia",
+      "Ghana",
+      "Panama",
+      "England"
+    ]
+  },
+  "results": [
+    {
+      "group": "A",
+      "home": "Mexico",
+      "away": "South Africa",
+      "score": [
+        2,
+        0
+      ]
+    },
+    {
+      "group": "A",
+      "home": "South Korea",
+      "away": "Czechia",
+      "score": [
+        2,
+        1
+      ]
+    },
+    {
+      "group": "B",
+      "home": "Canada",
+      "away": "Bosnia and Herzegovina",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "B",
+      "home": "Qatar",
+      "away": "Switzerland",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "C",
+      "home": "Brazil",
+      "away": "Morocco",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "C",
+      "home": "Haiti",
+      "away": "Scotland",
+      "score": [
+        0,
+        1
+      ]
+    },
+    {
+      "group": "D",
+      "home": "United States",
+      "away": "Paraguay",
+      "score": [
+        4,
+        1
+      ]
+    },
+    {
+      "group": "D",
+      "home": "Australia",
+      "away": "Turkey",
+      "score": [
+        2,
+        0
+      ]
+    },
+    {
+      "group": "E",
+      "home": "Germany",
+      "away": "Cura\u00e7ao",
+      "score": [
+        7,
+        1
+      ]
+    },
+    {
+      "group": "E",
+      "home": "Ivory Coast",
+      "away": "Ecuador",
+      "score": [
+        1,
+        0
+      ]
+    },
+    {
+      "group": "F",
+      "home": "Netherlands",
+      "away": "Japan",
+      "score": [
+        2,
+        2
+      ]
+    },
+    {
+      "group": "F",
+      "home": "Sweden",
+      "away": "Tunisia",
+      "score": [
+        5,
+        1
+      ]
+    },
+    {
+      "group": "G",
+      "home": "Belgium",
+      "away": "Egypt",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "G",
+      "home": "Iran",
+      "away": "New Zealand",
+      "score": [
+        2,
+        2
+      ]
+    },
+    {
+      "group": "H",
+      "home": "Spain",
+      "away": "Cape Verde",
+      "score": [
+        0,
+        0
+      ]
+    },
+    {
+      "group": "H",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "I",
+      "home": "France",
+      "away": "Senegal",
+      "score": [
+        3,
+        1
+      ]
+    },
+    {
+      "group": "I",
+      "home": "Iraq",
+      "away": "Norway",
+      "score": [
+        1,
+        4
+      ]
+    },
+    {
+      "group": "J",
+      "home": "Argentina",
+      "away": "Algeria",
+      "score": [
+        3,
+        0
+      ]
+    },
+    {
+      "group": "J",
+      "home": "Austria",
+      "away": "Jordan",
+      "score": [
+        3,
+        1
+      ]
+    },
+    {
+      "group": "K",
+      "home": "Portugal",
+      "away": "DR Congo",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "L",
+      "home": "England",
+      "away": "Croatia",
+      "score": [
+        4,
+        2
+      ]
+    },
+    {
+      "group": "L",
+      "home": "Ghana",
+      "away": "Panama",
+      "score": [
+        1,
+        0
+      ]
+    }
+  ],
+  "thirdPlaceOverride": {},
+  "koResults": {}
+}
