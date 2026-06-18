@@ -50,12 +50,30 @@ jobs:
       - name: Fetch latest results
         run: python fetch_results.py pool.json
 
-      # Best-effort: pull the previously published history so trends persist
-      # across runs without committing anything back. 404 on first run is fine.
+      # Best-effort: pull the previously published history and MERGE it with the
+      # history committed in the repo, so trends persist across runs without
+      # losing the committed baseline. 404 on first run is fine.
       - name: Rehydrate history
         run: |
           URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/history.json"
-          curl -fsSL "$URL" -o docs/history.json || echo "[]" > docs/history.json
+          curl -fsSL "$URL" -o /tmp/live_history.json || echo "[]" > /tmp/live_history.json
+          python - <<'PY'
+          import json
+          def load(p):
+              try:
+                  d = json.load(open(p))
+                  return d if isinstance(d, list) else []
+              except Exception:
+                  return []
+          # Union committed + live snapshots, de-duped by timestamp, time-sorted.
+          merged = {}
+          for snap in load("docs/history.json") + load("/tmp/live_history.json"):
+              if isinstance(snap, dict) and "t" in snap:
+                  merged[snap["t"]] = snap
+          out = [merged[t] for t in sorted(merged)][-60:]
+          json.dump(out, open("docs/history.json", "w"))
+          print(f"history snapshots after merge: {len(out)}")
+          PY
 
       - name: Run simulation
         env:
