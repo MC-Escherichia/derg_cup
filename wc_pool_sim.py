@@ -525,6 +525,42 @@ def calc_actual_score():
 
     return score
 
+def actual_group_tables():
+    """Per-team current group standing from PLAYED group matches only.
+
+    Returns {team: {"group", "place", "w", "d", "l", "pts", "gd", "played"}}.
+    Place is the team's current rank (1-4) within its group by pts, GD, GF.
+    """
+    info = {}
+    for g, gteams in GROUPS.items():
+        tbl = {t: {"pts": 0, "gf": 0, "ga": 0, "w": 0, "d": 0, "l": 0, "played": 0}
+               for t in gteams}
+        for i in range(len(gteams)):
+            for j in range(i + 1, len(gteams)):
+                a, b = gteams[i], gteams[j]
+                played = RESULTS[(g, frozenset({a, b}))]
+                if played is None:
+                    continue
+                ga, gb = played
+                for t, gf, gainst in ((a, ga, gb), (b, gb, ga)):
+                    tbl[t]["gf"] += gf; tbl[t]["ga"] += gainst; tbl[t]["played"] += 1
+                if ga > gb:
+                    tbl[a]["pts"] += 3; tbl[a]["w"] += 1; tbl[b]["l"] += 1
+                elif gb > ga:
+                    tbl[b]["pts"] += 3; tbl[b]["w"] += 1; tbl[a]["l"] += 1
+                else:
+                    tbl[a]["pts"] += 1; tbl[b]["pts"] += 1
+                    tbl[a]["d"] += 1; tbl[b]["d"] += 1
+        ranked = sorted(gteams, key=lambda t: (tbl[t]["pts"],
+                                               tbl[t]["gf"] - tbl[t]["ga"],
+                                               tbl[t]["gf"]), reverse=True)
+        for place, t in enumerate(ranked, 1):
+            d = tbl[t]
+            info[t] = {"group": g, "place": place,
+                       "w": d["w"], "d": d["d"], "l": d["l"],
+                       "pts": d["pts"], "gd": d["gf"] - d["ga"], "played": d["played"]}
+    return info
+
 def run(n=N_SIMS, json_path=None, history_path=None):
     wins = defaultdict(float)
     pts_sum = defaultdict(float)
@@ -561,6 +597,7 @@ def run(n=N_SIMS, json_path=None, history_path=None):
             hist = []
 
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        gtables = actual_group_tables()
         players = []
         for p in rows:
             wp = round(100 * wins[p] / n, 1)
@@ -568,6 +605,7 @@ def run(n=N_SIMS, json_path=None, history_path=None):
                 "name": p,
                 "teams": PLAYERS[p],
                 "flags": [flag(t) for t in PLAYERS[p]],
+                "teamMeta": [gtables.get(t) for t in PLAYERS[p]],
                 "winPct": wp,
                 "currentPts": actual_score[p]["pts"],
                 "currentGd": actual_score[p]["gd"],
