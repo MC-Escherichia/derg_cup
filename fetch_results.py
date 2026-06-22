@@ -60,12 +60,24 @@ def main(pool_path="pool.json", url=SOURCE):
         print(f"[fetch] could not reach source ({e}); leaving pool.json unchanged")
         return
     results, seen, unmatched, mismatched = [], set(), set(), 0
+    schedule = {}                                  # team -> [{date, time, opponent}]
     for m in data.get("matches", []):
         ft = (m.get("score") or {}).get("ft")
-        if not m.get("group") or not ft:          # only finished group-stage games
+        t1 = canon_to_team.get(_canon(m.get("team1", "")))
+        t2 = canon_to_team.get(_canon(m.get("team2", "")))
+
+        # --- upcoming fixtures (no final score yet) -> schedule -------------
+        if not ft and m.get("date"):
+            for me, opp_raw in ((t1, m.get("team2")), (t2, m.get("team1"))):
+                if not me:
+                    continue
+                opp = canon_to_team.get(_canon(opp_raw), opp_raw)
+                schedule.setdefault(me, []).append(
+                    {"date": m["date"], "time": m.get("time"), "opponent": opp})
+
+        # --- finished group-stage games -> results -------------------------
+        if not m.get("group") or not ft:           # only finished group-stage games
             continue
-        t1 = canon_to_team.get(_canon(m["team1"]))
-        t2 = canon_to_team.get(_canon(m["team2"]))
         if not t1:
             unmatched.add(m["team1"])
         if not t2:
@@ -82,9 +94,14 @@ def main(pool_path="pool.json", url=SOURCE):
         results.append({"group": team_group[t1], "home": t1, "away": t2,
                         "score": [int(ft[0]), int(ft[1])]})
 
+    for fixtures in schedule.values():            # chronological, earliest first
+        fixtures.sort(key=lambda f: (f["date"], f.get("time") or ""))
+
     pool["results"] = results
+    pool["schedule"] = schedule
     json.dump(pool, open(pool_path, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    print(f"[fetch] wrote {len(results)} group result(s) to {pool_path}")
+    print(f"[fetch] wrote {len(results)} group result(s) and "
+          f"{sum(len(v) for v in schedule.values())} upcoming fixture(s) to {pool_path}")
     if mismatched:
         print(f"[fetch] {mismatched} game(s) skipped — teams sit in different groups "
               f"in your draw than in the source (check your 'groups').")

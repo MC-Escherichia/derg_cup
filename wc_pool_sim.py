@@ -166,6 +166,7 @@ def load_pool(pool_path="pool.json", ratings_path="ratings.json"):
     players = cfg["players"]                       # {"Nick": [top, mid, bot]}
     third   = cfg.get("thirdPlaceOverride", {}) or {}
     ko      = {int(k): tuple(v) for k, v in (cfg.get("koResults", {}) or {}).items()}
+    schedule = cfg.get("schedule", {}) or {}       # team -> [{date, time, opponent}]
 
     elo = {}
     if os.path.exists(ratings_path):
@@ -209,15 +210,15 @@ def load_pool(pool_path="pool.json", ratings_path="ratings.json"):
                   f"{played} played match(es) using the eloratings.net formula (K={WC_K})")
 
     ratings = elo_to_ratings(elo)
-    return title, ratings, groups, results, players, third, ko
+    return title, ratings, groups, results, players, third, ko, schedule
 
 def load_config():
     if os.path.exists("pool.json"):
         return load_pool()
     ratings, groups, results, players = build_synthetic_world()   # demo fallback
-    return "World Cup Pool (demo data)", ratings, groups, results, players, {}, {}
+    return "World Cup Pool (demo data)", ratings, groups, results, players, {}, {}, {}
 
-TITLE, ratings, GROUPS, RESULTS, PLAYERS, THIRD_PLACE_OVERRIDE, KO_RESULTS = load_config()
+TITLE, ratings, GROUPS, RESULTS, PLAYERS, THIRD_PLACE_OVERRIDE, KO_RESULTS, SCHEDULE = load_config()
 
 # team -> owning player (a team belongs to exactly one player; unowned -> None)
 TEAM_OWNER = {}
@@ -598,6 +599,16 @@ def run(n=N_SIMS, json_path=None, history_path=None):
 
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
         gtables = actual_group_tables()
+
+        def team_meta(t):
+            meta = dict(gtables.get(t) or {})
+            fixtures = SCHEDULE.get(t) or []
+            if fixtures:                            # next (earliest upcoming) match
+                nxt = fixtures[0]
+                meta["nextDate"] = nxt.get("date")
+                meta["nextOpponent"] = nxt.get("opponent")
+            return meta or None
+
         players = []
         for p in rows:
             wp = round(100 * wins[p] / n, 1)
@@ -605,7 +616,7 @@ def run(n=N_SIMS, json_path=None, history_path=None):
                 "name": p,
                 "teams": PLAYERS[p],
                 "flags": [flag(t) for t in PLAYERS[p]],
-                "teamMeta": [gtables.get(t) for t in PLAYERS[p]],
+                "teamMeta": [team_meta(t) for t in PLAYERS[p]],
                 "winPct": wp,
                 "currentPts": actual_score[p]["pts"],
                 "currentGd": actual_score[p]["gd"],
