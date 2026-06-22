@@ -71,6 +71,7 @@ pool.json + ratings.json
 |---|---|---|
 | `N_SIMS` | 20,000 | Monte Carlo iterations |
 | `ELO_SCALE` | 450 | Passed to `elo_to_ratings()`; lower = stronger favorites |
+| `RATING_SIGMA_ELO` | 100 | Bayesian rating uncertainty (1σ Elo). Each sim draws one fresh strength per team, so parameter uncertainty widens win %s. `0` = point estimate (old behaviour, faster). Higher = less confident favorites. |
 | `RHO` | −0.08 | Dixon-Coles low-score correction |
 | `PEN_WIN_POINTS` | 3 | Pool points for winning a shootout |
 | `EVOLVE_ELO` | `True` | Set `False` before pasting a mid-tournament Elo dump |
