@@ -1,8 +1,8 @@
 {
   "title": "The Group Chat Cup",
-  "generatedAt": "2026-06-21T22:53:33+00:00",
+  "generatedAt": "2026-06-22T00:48:33+00:00",
   "nSims": 20000,
-  "matchesPlayed": 23,
+  "matchesPlayed": 39,
   "players": [
     {
       "name": "NH",
@@ -25,7 +25,9 @@
           "l": 0,
           "pts": 3,
           "gd": 3,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Austria"
         },
         {
           "group": "I",
@@ -35,76 +37,29 @@
           "l": 0,
           "pts": 3,
           "gd": 3,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Senegal"
         },
         {
           "group": "C",
-          "place": 1,
-          "w": 1,
-          "d": 0,
-          "l": 0,
-          "pts": 3,
-          "gd": 1,
-          "played": 1
-        }
-      ],
-      "winPct": 59.1,
-      "currentPts": 9,
-      "currentGd": 7,
-      "avgPts": 32.9,
-      "avgGd": 15.8,
-      "deltaPct": 0.6
-    },
-    {
-      "name": "NC",
-      "teams": [
-        "France",
-        "Turkey",
-        "Bosnia and Herzegovina"
-      ],
-      "flags": [
-        "\ud83c\uddeb\ud83c\uddf7",
-        "\ud83c\uddf9\ud83c\uddf7",
-        "\ud83c\udde7\ud83c\udde6"
-      ],
-      "teamMeta": [
-        {
-          "group": "I",
-          "place": 2,
-          "w": 1,
-          "d": 0,
-          "l": 0,
-          "pts": 3,
-          "gd": 2,
-          "played": 1
-        },
-        {
-          "group": "D",
           "place": 3,
-          "w": 0,
+          "w": 1,
           "d": 0,
           "l": 1,
-          "pts": 0,
-          "gd": -2,
-          "played": 1
-        },
-        {
-          "group": "B",
-          "place": 2,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
+          "pts": 3,
           "gd": 0,
-          "played": 1
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Brazil"
         }
       ],
-      "winPct": 13.2,
-      "currentPts": 4,
-      "currentGd": 0,
-      "avgPts": 24.7,
-      "avgGd": 7.6,
-      "deltaPct": 0.0
+      "winPct": 61.9,
+      "currentPts": 9,
+      "currentGd": 6,
+      "avgPts": 32.4,
+      "avgGd": 16.2,
+      "deltaPct": 3.4
     },
     {
       "name": "PB2",
@@ -121,92 +76,47 @@
       "teamMeta": [
         {
           "group": "H",
-          "place": 3,
-          "w": 0,
+          "place": 1,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 4,
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "Uruguay"
         },
         {
           "group": "B",
-          "place": 4,
-          "w": 0,
+          "place": 2,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 3,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Canada"
         },
         {
           "group": "F",
           "place": 4,
           "w": 0,
           "d": 0,
-          "l": 1,
+          "l": 2,
           "pts": 0,
-          "gd": -4,
-          "played": 1
+          "gd": -8,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Netherlands"
         }
       ],
-      "winPct": 8.3,
-      "currentPts": 2,
-      "currentGd": -4,
-      "avgPts": 23.1,
+      "winPct": 12.0,
+      "currentPts": 8,
+      "currentGd": -1,
+      "avgPts": 24.6,
       "avgGd": 4.1,
-      "deltaPct": -0.5
-    },
-    {
-      "name": "SC",
-      "teams": [
-        "Germany",
-        "Australia",
-        "Saudi Arabia"
-      ],
-      "flags": [
-        "\ud83c\udde9\ud83c\uddea",
-        "\ud83c\udde6\ud83c\uddfa",
-        "\ud83c\uddf8\ud83c\udde6"
-      ],
-      "teamMeta": [
-        {
-          "group": "E",
-          "place": 1,
-          "w": 1,
-          "d": 0,
-          "l": 0,
-          "pts": 3,
-          "gd": 6,
-          "played": 1
-        },
-        {
-          "group": "D",
-          "place": 2,
-          "w": 1,
-          "d": 0,
-          "l": 0,
-          "pts": 3,
-          "gd": 2,
-          "played": 1
-        },
-        {
-          "group": "H",
-          "place": 2,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        }
-      ],
-      "winPct": 5.6,
-      "currentPts": 7,
-      "currentGd": 8,
-      "avgPts": 22.2,
-      "avgGd": 5.6,
-      "deltaPct": 0.1
+      "deltaPct": 3.2
     },
     {
       "name": "KR",
@@ -229,35 +139,41 @@
           "l": 0,
           "pts": 3,
           "gd": 2,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Ghana"
         },
         {
           "group": "D",
-          "place": 4,
-          "w": 0,
+          "place": 3,
+          "w": 1,
           "d": 0,
           "l": 1,
-          "pts": 0,
-          "gd": -3,
-          "played": 1
+          "pts": 3,
+          "gd": -2,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Australia"
         },
         {
           "group": "G",
-          "place": 2,
+          "place": 3,
           "w": 0,
           "d": 1,
           "l": 0,
           "pts": 1,
           "gd": 0,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-21",
+          "nextOpponent": "Egypt"
         }
       ],
-      "winPct": 3.1,
-      "currentPts": 4,
-      "currentGd": -1,
-      "avgPts": 20.7,
-      "avgGd": 4.0,
-      "deltaPct": -0.1
+      "winPct": 9.7,
+      "currentPts": 7,
+      "currentGd": 0,
+      "avgPts": 24.0,
+      "avgGd": 5.3,
+      "deltaPct": 6.5
     },
     {
       "name": "PB",
@@ -274,13 +190,15 @@
       "teamMeta": [
         {
           "group": "K",
-          "place": 2,
+          "place": 3,
           "w": 0,
           "d": 1,
           "l": 0,
           "pts": 1,
           "gd": 0,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Uzbekistan"
         },
         {
           "group": "J",
@@ -290,7 +208,9 @@
           "l": 0,
           "pts": 3,
           "gd": 2,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Argentina"
         },
         {
           "group": "L",
@@ -300,117 +220,131 @@
           "l": 0,
           "pts": 3,
           "gd": 1,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "England"
         }
       ],
-      "winPct": 2.5,
+      "winPct": 3.2,
       "currentPts": 7,
       "currentGd": 3,
-      "avgPts": 18.4,
-      "avgGd": -4.0,
-      "deltaPct": 0.0
+      "avgPts": 18.5,
+      "avgGd": -4.7,
+      "deltaPct": 0.7
     },
     {
-      "name": "M&M",
+      "name": "NC",
       "teams": [
-        "Colombia",
-        "Ecuador",
-        "Iraq"
+        "France",
+        "Turkey",
+        "Bosnia and Herzegovina"
       ],
       "flags": [
-        "\ud83c\udde8\ud83c\uddf4",
-        "\ud83c\uddea\ud83c\udde8",
-        ""
+        "\ud83c\uddeb\ud83c\uddf7",
+        "\ud83c\uddf9\ud83c\uddf7",
+        "\ud83c\udde7\ud83c\udde6"
       ],
       "teamMeta": [
-        {
-          "group": "K",
-          "place": 3,
-          "w": 0,
-          "d": 0,
-          "l": 0,
-          "pts": 0,
-          "gd": 0,
-          "played": 0
-        },
-        {
-          "group": "E",
-          "place": 3,
-          "w": 0,
-          "d": 0,
-          "l": 1,
-          "pts": 0,
-          "gd": -1,
-          "played": 1
-        },
         {
           "group": "I",
-          "place": 4,
-          "w": 0,
-          "d": 0,
-          "l": 1,
-          "pts": 0,
-          "gd": -3,
-          "played": 1
-        }
-      ],
-      "winPct": 2.3,
-      "currentPts": 0,
-      "currentGd": -4,
-      "avgPts": 18.1,
-      "avgGd": -1.3,
-      "deltaPct": 0.1
-    },
-    {
-      "name": "RP",
-      "teams": [
-        "Belgium",
-        "South Korea",
-        "DR Congo"
-      ],
-      "flags": [
-        "\ud83c\udde7\ud83c\uddea",
-        "\ud83c\uddf0\ud83c\uddf7",
-        "\ud83c\udde8\ud83c\udde9"
-      ],
-      "teamMeta": [
-        {
-          "group": "G",
-          "place": 3,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        },
-        {
-          "group": "A",
           "place": 2,
           "w": 1,
           "d": 0,
           "l": 0,
           "pts": 3,
-          "gd": 1,
-          "played": 1
+          "gd": 2,
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Iraq"
         },
         {
-          "group": "K",
-          "place": 1,
+          "group": "D",
+          "place": 4,
+          "w": 0,
+          "d": 0,
+          "l": 2,
+          "pts": 0,
+          "gd": -3,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "United States"
+        },
+        {
+          "group": "B",
+          "place": 3,
           "w": 0,
           "d": 1,
-          "l": 0,
+          "l": 1,
           "pts": 1,
-          "gd": 0,
-          "played": 1
+          "gd": -3,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Qatar"
         }
       ],
-      "winPct": 1.9,
-      "currentPts": 5,
-      "currentGd": 1,
-      "avgPts": 19.8,
-      "avgGd": 1.1,
-      "deltaPct": 0.0
+      "winPct": 2.8,
+      "currentPts": 4,
+      "currentGd": -4,
+      "avgPts": 20.4,
+      "avgGd": 3.9,
+      "deltaPct": -10.4
+    },
+    {
+      "name": "SC",
+      "teams": [
+        "Germany",
+        "Australia",
+        "Saudi Arabia"
+      ],
+      "flags": [
+        "\ud83c\udde9\ud83c\uddea",
+        "\ud83c\udde6\ud83c\uddfa",
+        "\ud83c\uddf8\ud83c\udde6"
+      ],
+      "teamMeta": [
+        {
+          "group": "E",
+          "place": 1,
+          "w": 2,
+          "d": 0,
+          "l": 0,
+          "pts": 6,
+          "gd": 7,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Ecuador"
+        },
+        {
+          "group": "D",
+          "place": 2,
+          "w": 1,
+          "d": 0,
+          "l": 1,
+          "pts": 3,
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Paraguay"
+        },
+        {
+          "group": "H",
+          "place": 4,
+          "w": 0,
+          "d": 1,
+          "l": 1,
+          "pts": 1,
+          "gd": -4,
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "Cape Verde"
+        }
+      ],
+      "winPct": 2.5,
+      "currentPts": 10,
+      "currentGd": 3,
+      "avgPts": 20.4,
+      "avgGd": 2.2,
+      "deltaPct": -3.0
     },
     {
       "name": "BS",
@@ -427,92 +361,47 @@
       "teamMeta": [
         {
           "group": "C",
-          "place": 3,
-          "w": 0,
+          "place": 1,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 3,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Scotland"
         },
         {
           "group": "B",
-          "place": 3,
-          "w": 0,
+          "place": 1,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 6,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Switzerland"
         },
         {
           "group": "A",
           "place": 4,
           "w": 0,
-          "d": 0,
-          "l": 1,
-          "pts": 0,
-          "gd": -2,
-          "played": 1
-        }
-      ],
-      "winPct": 1.2,
-      "currentPts": 2,
-      "currentGd": -2,
-      "avgPts": 17.4,
-      "avgGd": 0.4,
-      "deltaPct": -0.1
-    },
-    {
-      "name": "JF",
-      "teams": [
-        "Uruguay",
-        "Ivory Coast",
-        "Czechia"
-      ],
-      "flags": [
-        "\ud83c\uddfa\ud83c\uddfe",
-        "\ud83c\udde8\ud83c\uddee",
-        "\ud83c\udde8\ud83c\uddff"
-      ],
-      "teamMeta": [
-        {
-          "group": "H",
-          "place": 1,
-          "w": 0,
           "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        },
-        {
-          "group": "E",
-          "place": 2,
-          "w": 1,
-          "d": 0,
-          "l": 0,
-          "pts": 3,
-          "gd": 1,
-          "played": 1
-        },
-        {
-          "group": "A",
-          "place": 3,
-          "w": 0,
-          "d": 0,
           "l": 1,
-          "pts": 0,
-          "gd": -1,
-          "played": 1
+          "pts": 1,
+          "gd": -2,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "South Korea"
         }
       ],
-      "winPct": 0.9,
-      "currentPts": 4,
-      "currentGd": 0,
-      "avgPts": 16.3,
-      "avgGd": -2.2,
-      "deltaPct": 0.0
+      "winPct": 2.4,
+      "currentPts": 9,
+      "currentGd": 7,
+      "avgPts": 19.1,
+      "avgGd": 5.9,
+      "deltaPct": 1.1
     },
     {
       "name": "ER",
@@ -530,22 +419,26 @@
         {
           "group": "C",
           "place": 2,
-          "w": 0,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 1,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Haiti"
         },
         {
           "group": "F",
           "place": 2,
-          "w": 0,
+          "w": 1,
           "d": 1,
           "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "pts": 4,
+          "gd": 4,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Sweden"
         },
         {
           "group": "J",
@@ -555,15 +448,74 @@
           "l": 1,
           "pts": 0,
           "gd": -2,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Algeria"
         }
       ],
-      "winPct": 0.6,
-      "currentPts": 2,
+      "winPct": 1.5,
+      "currentPts": 8,
+      "currentGd": 3,
+      "avgPts": 19.1,
+      "avgGd": 1.2,
+      "deltaPct": 0.9
+    },
+    {
+      "name": "DD",
+      "teams": [
+        "Netherlands",
+        "Egypt",
+        "Cura\u00e7ao"
+      ],
+      "flags": [
+        "\ud83c\uddf3\ud83c\uddf1",
+        "\ud83c\uddea\ud83c\uddec",
+        "\ud83c\udde8\ud83c\uddfc"
+      ],
+      "teamMeta": [
+        {
+          "group": "F",
+          "place": 1,
+          "w": 1,
+          "d": 1,
+          "l": 0,
+          "pts": 4,
+          "gd": 4,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Tunisia"
+        },
+        {
+          "group": "G",
+          "place": 4,
+          "w": 0,
+          "d": 1,
+          "l": 0,
+          "pts": 1,
+          "gd": 0,
+          "played": 1,
+          "nextDate": "2026-06-21",
+          "nextOpponent": "New Zealand"
+        },
+        {
+          "group": "E",
+          "place": 4,
+          "w": 0,
+          "d": 1,
+          "l": 1,
+          "pts": 1,
+          "gd": -6,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Ivory Coast"
+        }
+      ],
+      "winPct": 1.2,
+      "currentPts": 6,
       "currentGd": -2,
-      "avgPts": 16.6,
-      "avgGd": -1.8,
-      "deltaPct": 0.0
+      "avgPts": 17.4,
+      "avgGd": -1.3,
+      "deltaPct": 0.9
     },
     {
       "name": "MS",
@@ -581,91 +533,160 @@
         {
           "group": "A",
           "place": 1,
+          "w": 2,
+          "d": 0,
+          "l": 0,
+          "pts": 6,
+          "gd": 3,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Czechia"
+        },
+        {
+          "group": "G",
+          "place": 1,
+          "w": 0,
+          "d": 2,
+          "l": 0,
+          "pts": 2,
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "Egypt"
+        },
+        {
+          "group": "B",
+          "place": 4,
+          "w": 0,
+          "d": 1,
+          "l": 1,
+          "pts": 1,
+          "gd": -6,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Bosnia and Herzegovina"
+        }
+      ],
+      "winPct": 0.9,
+      "currentPts": 9,
+      "currentGd": -3,
+      "avgPts": 18.0,
+      "avgGd": -3.8,
+      "deltaPct": 0.4
+    },
+    {
+      "name": "M&M",
+      "teams": [
+        "Colombia",
+        "Ecuador",
+        "Iraq"
+      ],
+      "flags": [
+        "\ud83c\udde8\ud83c\uddf4",
+        "\ud83c\uddea\ud83c\udde8",
+        ""
+      ],
+      "teamMeta": [
+        {
+          "group": "K",
+          "place": 1,
           "w": 1,
           "d": 0,
           "l": 0,
           "pts": 3,
           "gd": 2,
-          "played": 1
-        },
-        {
-          "group": "G",
-          "place": 1,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        },
-        {
-          "group": "B",
-          "place": 1,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        }
-      ],
-      "winPct": 0.5,
-      "currentPts": 5,
-      "currentGd": 2,
-      "avgPts": 16.4,
-      "avgGd": -1.4,
-      "deltaPct": 0.0
-    },
-    {
-      "name": "DD",
-      "teams": [
-        "Netherlands",
-        "Egypt",
-        "Cura\u00e7ao"
-      ],
-      "flags": [
-        "\ud83c\uddf3\ud83c\uddf1",
-        "\ud83c\uddea\ud83c\uddec",
-        "\ud83c\udde8\ud83c\uddfc"
-      ],
-      "teamMeta": [
-        {
-          "group": "F",
-          "place": 3,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
-        },
-        {
-          "group": "G",
-          "place": 4,
-          "w": 0,
-          "d": 1,
-          "l": 0,
-          "pts": 1,
-          "gd": 0,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "DR Congo"
         },
         {
           "group": "E",
+          "place": 3,
+          "w": 0,
+          "d": 1,
+          "l": 1,
+          "pts": 1,
+          "gd": -1,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Germany"
+        },
+        {
+          "group": "I",
           "place": 4,
           "w": 0,
           "d": 0,
           "l": 1,
           "pts": 0,
-          "gd": -6,
-          "played": 1
+          "gd": -3,
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "France"
         }
       ],
-      "winPct": 0.4,
-      "currentPts": 2,
-      "currentGd": -6,
-      "avgPts": 15.0,
-      "avgGd": -8.0,
-      "deltaPct": 0.1
+      "winPct": 0.9,
+      "currentPts": 4,
+      "currentGd": -2,
+      "avgPts": 15.9,
+      "avgGd": -3.3,
+      "deltaPct": -1.3
+    },
+    {
+      "name": "RP",
+      "teams": [
+        "Belgium",
+        "South Korea",
+        "DR Congo"
+      ],
+      "flags": [
+        "\ud83c\udde7\ud83c\uddea",
+        "\ud83c\uddf0\ud83c\uddf7",
+        "\ud83c\udde8\ud83c\udde9"
+      ],
+      "teamMeta": [
+        {
+          "group": "G",
+          "place": 2,
+          "w": 0,
+          "d": 2,
+          "l": 0,
+          "pts": 2,
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "New Zealand"
+        },
+        {
+          "group": "A",
+          "place": 2,
+          "w": 1,
+          "d": 0,
+          "l": 1,
+          "pts": 3,
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "South Africa"
+        },
+        {
+          "group": "K",
+          "place": 2,
+          "w": 0,
+          "d": 1,
+          "l": 0,
+          "pts": 1,
+          "gd": 0,
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Colombia"
+        }
+      ],
+      "winPct": 0.6,
+      "currentPts": 6,
+      "currentGd": 0,
+      "avgPts": 16.7,
+      "avgGd": -1.4,
+      "deltaPct": -1.3
     },
     {
       "name": "JR",
@@ -688,35 +709,41 @@
           "l": 1,
           "pts": 0,
           "gd": -2,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Panama"
         },
         {
           "group": "F",
-          "place": 1,
+          "place": 3,
           "w": 1,
           "d": 0,
-          "l": 0,
+          "l": 1,
           "pts": 3,
-          "gd": 4,
-          "played": 1
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Japan"
         },
         {
           "group": "H",
-          "place": 4,
+          "place": 3,
           "w": 0,
-          "d": 1,
+          "d": 2,
           "l": 0,
-          "pts": 1,
+          "pts": 2,
           "gd": 0,
-          "played": 1
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "Saudi Arabia"
         }
       ],
-      "winPct": 0.4,
-      "currentPts": 4,
-      "currentGd": 2,
-      "avgPts": 15.5,
-      "avgGd": -1.7,
-      "deltaPct": -0.1
+      "winPct": 0.3,
+      "currentPts": 5,
+      "currentGd": -2,
+      "avgPts": 15.0,
+      "avgGd": -4.4,
+      "deltaPct": -0.2
     },
     {
       "name": "MC",
@@ -739,7 +766,9 @@
           "l": 1,
           "pts": 0,
           "gd": -2,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Norway"
         },
         {
           "group": "J",
@@ -749,25 +778,86 @@
           "l": 1,
           "pts": 0,
           "gd": -3,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-22",
+          "nextOpponent": "Jordan"
         },
         {
           "group": "K",
           "place": 4,
           "w": 0,
           "d": 0,
-          "l": 0,
+          "l": 1,
           "pts": 0,
+          "gd": -2,
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Portugal"
+        }
+      ],
+      "winPct": 0.1,
+      "currentPts": 0,
+      "currentGd": -7,
+      "avgPts": 10.9,
+      "avgGd": -9.6,
+      "deltaPct": 0.0
+    },
+    {
+      "name": "JF",
+      "teams": [
+        "Uruguay",
+        "Ivory Coast",
+        "Czechia"
+      ],
+      "flags": [
+        "\ud83c\uddfa\ud83c\uddfe",
+        "\ud83c\udde8\ud83c\uddee",
+        "\ud83c\udde8\ud83c\uddff"
+      ],
+      "teamMeta": [
+        {
+          "group": "H",
+          "place": 2,
+          "w": 0,
+          "d": 2,
+          "l": 0,
+          "pts": 2,
           "gd": 0,
-          "played": 0
+          "played": 2,
+          "nextDate": "2026-06-26",
+          "nextOpponent": "Spain"
+        },
+        {
+          "group": "E",
+          "place": 2,
+          "w": 1,
+          "d": 0,
+          "l": 1,
+          "pts": 3,
+          "gd": 0,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Cura\u00e7ao"
+        },
+        {
+          "group": "A",
+          "place": 3,
+          "w": 0,
+          "d": 1,
+          "l": 1,
+          "pts": 1,
+          "gd": -1,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Mexico"
         }
       ],
       "winPct": 0.0,
-      "currentPts": 0,
-      "currentGd": -5,
-      "avgPts": 10.9,
-      "avgGd": -9.0,
-      "deltaPct": -0.1
+      "currentPts": 6,
+      "currentGd": -1,
+      "avgPts": 11.1,
+      "avgGd": -4.6,
+      "deltaPct": -0.9
     },
     {
       "name": "JH",
@@ -785,12 +875,14 @@
         {
           "group": "D",
           "place": 1,
-          "w": 1,
+          "w": 2,
           "d": 0,
           "l": 0,
-          "pts": 3,
-          "gd": 3,
-          "played": 1
+          "pts": 6,
+          "gd": 5,
+          "played": 2,
+          "nextDate": "2026-06-25",
+          "nextOpponent": "Turkey"
         },
         {
           "group": "L",
@@ -800,24 +892,28 @@
           "l": 1,
           "pts": 0,
           "gd": -1,
-          "played": 1
+          "played": 1,
+          "nextDate": "2026-06-23",
+          "nextOpponent": "Croatia"
         },
         {
           "group": "C",
           "place": 4,
           "w": 0,
           "d": 0,
-          "l": 1,
+          "l": 2,
           "pts": 0,
-          "gd": -1,
-          "played": 1
+          "gd": -4,
+          "played": 2,
+          "nextDate": "2026-06-24",
+          "nextOpponent": "Morocco"
         }
       ],
       "winPct": 0.0,
-      "currentPts": 3,
-      "currentGd": 1,
-      "avgPts": 8.8,
-      "avgGd": -9.4,
+      "currentPts": 6,
+      "currentGd": 0,
+      "avgPts": 12.4,
+      "avgGd": -5.7,
       "deltaPct": 0.0
     }
   ]
