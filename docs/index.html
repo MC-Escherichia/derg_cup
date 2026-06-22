@@ -130,11 +130,14 @@
 
     .teams { display: flex; gap: 0.4rem; flex-wrap: wrap; }
     .team-badge {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      background: #f0f0f0; padding: 0.25rem 0.6rem;
-      border-radius: 16px; font-size: 0.82rem; color: #555;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #f0f0f0; padding: 0.3rem 0.6rem;
+      border-radius: 10px; font-size: 0.82rem; color: #555;
     }
-    .team-flag { font-size: 1.05rem; }
+    .team-flag { font-size: 1.15rem; line-height: 1; }
+    .team-text { display: flex; flex-direction: column; line-height: 1.25; }
+    .team-name-c { font-weight: 600; color: #444; }
+    .team-meta { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
 
     .sparkline { width: 100%; }
     .sparkline svg { width: 100%; height: 44px; display: block; }
@@ -239,6 +242,12 @@
     // Format a goal differential with an explicit + / − sign.
     const fmtSigned = (v, digits = 0) => (v > 0 ? "+" : "") + v.toFixed(digits);
 
+    // 1 -> "1st", 2 -> "2nd", etc.
+    const ordinal = n => {
+      const s = ["th", "st", "nd", "rd"], v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    };
+
     // Build a sparkline. "global" mode uses a fixed 0–100 win-% scale so every
     // player is comparable; "perPlayer" mode auto-scales to each player's own
     // min/max so small swings stay legible.
@@ -340,12 +349,22 @@
           <div className="player-info">
             <div className="player-name">{player.name}</div>
             <div className="teams">
-              {player.teams.map((team, i) => (
-                <span className="team-badge" key={team + i}>
-                  <span className="team-flag">{player.flags[i] || "🏳️"}</span>
-                  <span>{team}</span>
-                </span>
-              ))}
+              {player.teams.map((team, i) => {
+                const m = (player.teamMeta || [])[i];
+                return (
+                  <span className="team-badge" key={team + i}>
+                    <span className="team-flag">{player.flags[i] || "🏳️"}</span>
+                    <span className="team-text">
+                      <span className="team-name-c">{team}</span>
+                      {m && (
+                        <span className="team-meta">
+                          Grp {m.group} · {ordinal(m.place)} · {m.w}-{m.d}-{m.l}
+                        </span>
+                      )}
+                    </span>
+                  </span>
+                );
+              })}
             </div>
           </div>
 
