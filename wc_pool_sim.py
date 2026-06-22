@@ -41,6 +41,18 @@ PEN_LOSS_POINTS = 1      # losing a shootout (your rules: 1)
 HOME_ADV        = 0.0    # neutral venues by default; set per-match if you want host edges
 RHO             = -0.08  # Dixon-Coles low-score dependence (negative boosts 0-0 / 1-1)
 
+# Bayesian rating uncertainty (posterior-predictive Monte Carlo).
+# An Elo number is an *estimate*, not the truth — the favourite might simply be
+# weaker than its rating says. Treat each team's strength as a posterior with
+# mean = its (evolved) Elo and a 1-sigma spread of RATING_SIGMA_ELO Elo points.
+# Each simulated tournament draws ONE fresh strength per team (correlated across
+# all of that team's matches), so parameter uncertainty propagates into the win
+# %s and stops the model being over-confident about its favourites.
+#   0   -> off (point estimate; old behaviour, and faster — caches across sims)
+#   100 -> tames the top seed noticeably while keeping it the clear favourite
+#   150 -> wider field; raise if the board still looks too sharp
+RATING_SIGMA_ELO = 100.0
+
 # Evolve Elo from the pre-tournament snapshot using eloratings.net's own formula,
 # replaying the results you've entered — so you only ever need the pre-WC ratings.
 EVOLVE_ELO   = True
@@ -459,7 +471,25 @@ def award(score, team, pts, gd):
         score[owner]["pts"] += pts
         score[owner]["gd"]  += gd
 
+# Bayesian posterior over team strength: the Elo-derived offset is the posterior
+# mean; resample_ratings() draws around it each tournament. BASE_Z snapshots the
+# symmetric atk=def offset from elo_to_ratings() (z = (elo - mean) / 450).
+BASE_Z = {t: ratings[t]["atk"] for t in ratings}
+
+def resample_ratings():
+    """Draw one posterior sample of every team's strength (Bayesian parameter
+    uncertainty) and refresh the matchup cache. No-op when RATING_SIGMA_ELO == 0,
+    which keeps the old fast path (cumulative score dists cache across sims)."""
+    if not RATING_SIGMA_ELO:
+        return
+    sd = RATING_SIGMA_ELO / 450.0          # same Elo->offset scale as elo_to_ratings()
+    for t, z in BASE_Z.items():
+        s = z + rng.normal(0.0, sd)
+        ratings[t] = {"atk": s, "def": s}  # stronger draw -> scores more AND concedes less
+    _dc_cumdist.cache_clear()              # ratings changed -> stale cumulative dists
+
 def sim_tournament():
+    resample_ratings()                     # one posterior draw of strengths per tournament
     score = {p: {"pts": 0, "gd": 0} for p in PLAYERS}
     standings = sim_group_stage(score)
     sim_knockouts(standings, score)
@@ -658,6 +688,15 @@ if __name__ == "__main__":
 #      attack/defense with PyMC or Stan. Then in each tournament sim you draw
 #      one posterior sample of ratings, so parameter uncertainty propagates
 #      into the win %s (wider, more honest spreads).
+#
+#   We already do a *lightweight* version of (2) without the heavy dependency:
+#   RATING_SIGMA_ELO + resample_ratings() treat each team's Elo as a posterior
+#   MEAN and draw one Normal strength sample per tournament. That is the part of
+#   the Bayesian story that actually moves win %s — it stops the model being
+#   over-confident about its favourites. A full PyMC fit would replace the fixed
+#   Normal spread with a posterior LEARNED from match data (so well-observed teams
+#   get a tighter spread than rarely-seen ones); everything downstream is unchanged
+#   — just feed each posterior draw to sim_tournament() in place of resample_ratings.
 #
 #   Sketch (PyMC):
 #       atk ~ Normal(0, sigma_atk)        # per team
