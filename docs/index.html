@@ -35,6 +35,27 @@
     h1 { font-size: 2.2rem; margin-bottom: 0.4rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
     .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
 
+    .articles-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .article-link {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      text-decoration: none;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .article-link:hover { background: rgba(255,255,255,0.3); }
+    .article-link::before { content: "📝 "; }
+
     .meta {
       font-size: 0.85rem;
       opacity: 0.85;
@@ -488,6 +509,9 @@
           <header>
             <h1>⚽ {title}</h1>
             <div className="subtitle">Live Win Probability Tracker</div>
+            <div className="articles-bar">
+              <a href="group-stage-recap.html" className="article-link">Group Stage Autopsy</a>
+            </div>
             <div className="meta">
               <span>Matches played: {results ? results.matchesPlayed : "—"}</span>
               <span>•</span>
