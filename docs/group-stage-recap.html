@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Stage Autopsy — The Group Chat Cup</title>
+  <style>
+    :root {
+      --brand: #1e3c72;
+      --brand-light: #2a5298;
+      --up: #22c55e;
+      --down: #ef4444;
+      --muted: #999;
+      --prose-max: 780px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    /* ── Header ── */
+    header { text-align: center; margin-bottom: 1.5rem; color: white; }
+    .back-link {
+      display: inline-block;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: white; }
+    .back-link::before { content: "← "; }
+    h1 { font-size: 2rem; line-height: 1.2; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .byline { font-size: 0.9rem; opacity: 0.8; }
+
+    /* ── Article card ── */
+    .article-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      padding: 2.5rem 3rem;
+    }
+
+    @media (max-width: 640px) {
+      .article-card { padding: 1.5rem 1.25rem; }
+      h1 { font-size: 1.5rem; }
+    }
+
+    /* ── Prose typography ── */
+    .prose { max-width: var(--prose-max); margin: 0 auto; line-height: 1.75; }
+
+    .prose h2 {
+      font-size: 1.35rem;
+      color: var(--brand);
+      margin: 2.25rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #e8edf5;
+    }
+    .prose h2:first-child { margin-top: 0; }
+
+    .prose h3 {
+      font-size: 1.05rem;
+      color: #444;
+      margin: 1.5rem 0 0.4rem;
+      font-weight: 700;
+    }
+
+    .prose p { margin-bottom: 1rem; color: #444; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    .prose strong { color: #222; }
+
+    .prose em { font-style: italic; }
+
+    .prose ul, .prose ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+    .prose li { margin-bottom: 0.3rem; }
+
+    .prose hr {
+      border: none;
+      border-top: 2px solid #e8edf5;
+      margin: 2rem 0;
+    }
+
+    /* ── Lede / intro text ── */
+    .lede {
+      font-size: 1.1rem;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #e8edf5;
+    }
+
+    /* ── Tables ── */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1.25rem 0 1.5rem;
+      overflow-x: auto;
+      display: block;
+    }
+    .prose thead th {
+      background: var(--brand);
+      color: white;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .prose tbody tr:nth-child(even) { background: #f8f9fa; }
+    .prose tbody tr:hover { background: #eef2fb; }
+    .prose td {
+      padding: 0.55rem 0.85rem;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+    }
+    .prose tbody tr:last-child td { border-bottom: none; }
+
+    /* leader row */
+    .leader td { font-weight: 700; color: var(--brand); }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-left: 4px solid var(--brand-light);
+      background: #f0f4fb;
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+    }
+    .callout p { color: #333; margin-bottom: 0.4rem; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.highlight {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    /* ── Win-prob bar ── */
+    .prob-table td:last-child { width: 160px; }
+    .prob-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .prob-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .prob-bar-fill {
+      height: 100%;
+      background: var(--brand-light);
+      border-radius: 999px;
+    }
+    .prob-pct {
+      font-weight: 700;
+      color: var(--brand);
+      font-size: 0.88rem;
+      white-space: nowrap;
+      width: 3.5rem;
+      text-align: right;
+    }
+    .prob-pct.tiny { color: var(--muted); font-weight: 400; }
+
+    /* ── Turning-point number ── */
+    .tp-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: var(--brand);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 0.4rem;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    .tp-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 1.75rem 0 0.5rem;
+    }
+    .tp-heading h3 { margin: 0; }
+
+    .winner-loser {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.6rem 0 0.3rem;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .tag.win { background: #dcfce7; color: #166534; }
+    .tag.loss { background: #fee2e2; color: #991b1b; }
+
+    /* ── Footer ── */
+    .article-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #e8edf5;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-link">Back to standings</a>
+      <h1>The Group Chat Cup: Group Stage Autopsy</h1>
+      <div class="byline">48 teams · 72 matches · June 28, 2026</div>
+    </header>
+
+    <div class="article-card">
+      <div class="prose">
+
+        <p class="lede">48 teams, 72 matches, and one pool player who's already ruining everyone's summer.</p>
+
+        <h2>The Leaderboard</h2>
+        <p>The group stage is over. The dust has settled. Here's where the pool stands heading into the Round of 32:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Pts</th>
+              <th>GD</th>
+              <th>Teams still alive</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="leader">
+              <td>1</td><td>NH</td><td>18</td><td>+5</td>
+              <td>Argentina (R32), Norway (R32)</td>
+            </tr>
+            <tr>
+              <td>2</td><td>NC</td><td>16</td><td>+5</td>
+              <td>France (R32), Bosnia (R32)</td>
+            </tr>
+            <tr>
+              <td>3</td><td>BS</td><td>15</td><td>+10</td>
+              <td>Brazil (R32), Canada (R32), South Africa (R32)</td>
+            </tr>
+            <tr>
+              <td>4</td><td>PB2</td><td>14</td><td>−1</td>
+              <td>Spain (R32), Switzerland (R32)</td>
+            </tr>
+            <tr>
+              <td>5</td><td>PB</td><td>13</td><td>+5</td>
+              <td>Portugal (R32), Austria (R32), Ghana (R32)</td>
+            </tr>
+            <tr>
+              <td>5</td><td>JR</td><td>13</td><td>0</td>
+              <td>Croatia (R32), Sweden (R32), Cape Verde (R32)</td>
+            </tr>
+            <tr>
+              <td>5</td><td>DD</td><td>13</td><td>0</td>
+              <td>Netherlands (R32), Egypt (R32)</td>
+            </tr>
+            <tr>
+              <td>5</td><td>MS</td><td>13</td><td>−2</td>
+              <td>Mexico (R32) only</td>
+            </tr>
+            <tr>
+              <td>9</td><td>RP</td><td>12</td><td>+4</td>
+              <td>Belgium (R32), DR Congo (R32)</td>
+            </tr>
+            <tr>
+              <td>9</td><td>SC</td><td>12</td><td>+2</td>
+              <td>Germany (R32), Australia (R32)</td>
+            </tr>
+            <tr>
+              <td>9</td><td>ER</td><td>12</td><td>+2</td>
+              <td>Morocco (R32), Japan (R32)</td>
+            </tr>
+            <tr>
+              <td>9</td><td>KR</td><td>12</td><td>−4</td>
+              <td>England (R32), Paraguay (R32)</td>
+            </tr>
+            <tr>
+              <td>13</td><td>M&amp;M</td><td>11</td><td>−8</td>
+              <td>Colombia (R32), Ecuador (R32)</td>
+            </tr>
+            <tr>
+              <td>14</td><td>JF</td><td>9</td><td>−3</td>
+              <td>Ivory Coast (R32) only</td>
+            </tr>
+            <tr>
+              <td>15</td><td>MC</td><td>7</td><td>−9</td>
+              <td>Senegal (R32), Algeria (R32)</td>
+            </tr>
+            <tr>
+              <td>16</td><td>JH</td><td>6</td><td>−6</td>
+              <td>USA (R32) only</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>The six-point gap at the top is large. The four-player cluster tied at 13 points looks competitive, but MS and JR have wildly different knockout ceilings despite identical scores. And JH — sitting on 6 points with only the USA surviving — is essentially playing for pride.</p>
+
+        <hr>
+
+        <h2>The NH Problem</h2>
+
+        <p>Let's get the uncomfortable truth out of the way: <strong>NH owns this pool right now, and the model agrees emphatically.</strong></p>
+
+        <p>The Monte Carlo simulation — 20,000 runs of the remaining tournament, sampling team strength from evolved post-group-stage Elo ratings — gives NH a <strong>55.3% probability of winning the pool outright.</strong> In a 16-person pool, that number is almost absurd. Second place (PB2) sits at 14.4%. The field combined gets 44.7%.</p>
+
+        <p>How did this happen? Two words: <strong>Argentina</strong> and <strong>Norway.</strong></p>
+
+        <p>Argentina was dominant — 9 points, 8 goals scored, 1 conceded, tied for the group stage's highest total. They beat Algeria 3-0, Austria 2-0, and Jordan 3-1 without breaking a sweat. Their evolved Elo after these results makes them the tournament's clear favorite by a significant margin, projecting to an average of 31.9 pool points by tournament end if they win it all.</p>
+
+        <p>Norway wasn't far behind. A 4-1 win over Iraq in round one set the tone. They stumbled 1-4 to France in the final group match but had already clinched second — a calculated cruise to the knockouts with 6 points.</p>
+
+        <p>Even Scotland — eliminated in Group C as expected — contributed a solid 3 points (a win over Haiti before losses to Morocco and Brazil). NH's floor going into the group stage was probably 15 points. They scored 18.</p>
+
+        <div class="callout highlight">
+          <p>The other 15 players in this pool want the same thing: <strong>Argentina to lose.</strong> The bracket, unfortunately, does not make it easy. Argentina opens with Cape Verde.</p>
+        </div>
+
+        <hr>
+
+        <h2>Key Turning Points</h2>
+
+        <div class="tp-heading">
+          <span class="tp-number">1</span>
+          <h3>Ecuador 2-1 Germany — The Shock of the Group Stage</h3>
+        </div>
+        <p>This was the result that most distorted the pool. Going into the final round of Group E, Germany had already clinched. Ecuador needed a win and got one: a 2-1 upset that handed Ecuador a third-place berth while leaving Germany with 6 points instead of 9.</p>
+        <p>The model had Germany winning that match. The Dixon-Coles goal model gave Ecuador roughly a 22% chance. They took it.</p>
+        <div class="winner-loser">
+          <span class="tag win">Winner: M&amp;M — Ecuador was their bottom pick, now heads to the R32 vs Mexico</span>
+          <span class="tag loss">Loser: SC — Germany dropping 3 expected points while chasing an 18-point leader hurts</span>
+        </div>
+
+        <div class="tp-heading">
+          <span class="tp-number">2</span>
+          <h3>South Africa 1-0 South Korea — BS's Unlikely Triple</h3>
+        </div>
+        <p>Group A was supposed to produce Mexico and South Korea. Instead, South Africa came from behind in round three — beating South Korea 1-0 to take second — and became the unexpected third team on BS's roster to advance. <strong>BS is the only pool player with all three teams still alive.</strong></p>
+        <p>They open the knockouts with a guaranteed freebie: South Africa vs. Canada is Match 73, and BS advances a team no matter what. No other player has that luxury. Brazil vs. Japan follows, meaning BS could have two teams in the Round of 16.</p>
+        <div class="winner-loser">
+          <span class="tag win">Winner: BS — unprecedented three-team advance</span>
+          <span class="tag loss">Loser: RP — South Korea (mid pick) eliminated in 3rd despite solid pre-tournament Elo</span>
+        </div>
+
+        <div class="tp-heading">
+          <span class="tp-number">3</span>
+          <h3>Uruguay Eliminated with 2 Points — JF's Nightmare</h3>
+        </div>
+        <p>Uruguay came in as a genuine contender — strong Elo, experienced squad, favorable group draw on paper. They left with 2 points and no wins after three draws: 1-1 vs Saudi Arabia, 2-2 vs Cape Verde, 0-1 vs Spain. The underlying model rated Uruguay considerably higher than their output suggested. This is the pool's starkest example of variance eating a contender.</p>
+        <p>JF had Uruguay as their top pick. They now sit 14th in the pool with only Ivory Coast alive, 9 points behind NH, and would need Ivory Coast to reach the final to have any chance.</p>
+        <div class="winner-loser">
+          <span class="tag loss">Loser: JF — catastrophically</span>
+          <span class="tag win">Beneficiary: PB2 — Spain's clean 7-point group win (4-0 vs Saudi Arabia, 1-0 vs Uruguay) was efficient throughout</span>
+        </div>
+
+        <div class="tp-heading">
+          <span class="tp-number">4</span>
+          <h3>Cape Verde's Three-Draw Miracle — JR's Hidden Asset</h3>
+        </div>
+        <p>Nobody saw this coming. Cape Verde drew Spain 0-0, drew Uruguay 2-2, drew Saudi Arabia 0-0, and finished as <strong>Group H runners-up</strong> on 3 points — the mathematical minimum to advance as runner-up, and they made it. JR's bottom pick is in the Round of 32, drawing Argentina as their reward.</p>
+        <p>JR now has Cape Verde, Croatia, and Sweden all alive — the deepest three-team roster of any mid-table player. The model gives JR just 0.3% win probability (none of those teams are expected to go deep), but the floor is higher than their 13 points suggest.</p>
+        <div class="winner-loser">
+          <span class="tag win">Winner: JR — maximum survival count</span>
+          <span class="tag loss">Loser: JF — Cape Verde's advance meant Uruguay couldn't squeeze through in 3rd place</span>
+        </div>
+
+        <div class="tp-heading">
+          <span class="tp-number">5</span>
+          <h3>Turkey 3-2 USA — JH's Slow Death</h3>
+        </div>
+        <p>Turkey's final-round comeback dropped the USA from a potential 9-point group winner to a 6-point one. More importantly, Panama (0pts) and Haiti (0pts) were both disasters. JH's three teams combined for just 6 pool points — the worst group-stage haul in the pool. They now have only the USA and face Bosnia in R32.</p>
+        <div class="winner-loser">
+          <span class="tag loss">Loser: JH — the model gives them 0.0% win probability. Not rounded. Genuinely zero across 20,000 simulations.</span>
+        </div>
+
+        <div class="tp-heading">
+          <span class="tp-number">6</span>
+          <h3>France Goes Perfect — NC Stays in the Hunt</h3>
+        </div>
+        <p>NC's path to contention runs entirely through France, and France went 9-for-9 in Group I: Senegal 3-1, Iraq 3-0, Norway 4-1. France enters the knockouts as the model's #2 overall threat. Bosnia's 3-1 win over Qatar in the final group match also clinched their 3rd-place qualification, giving NC two teams alive despite Turkey flaming out with 0 pool points.</p>
+        <div class="winner-loser">
+          <span class="tag win">Winner: NC — France as a tournament contender keeps them in the conversation</span>
+        </div>
+
+        <hr>
+
+        <h2>The Model's View</h2>
+
+        <p>After replaying all 72 group stage results through the eloratings.net formula (K=60, neutral venues), and applying Bayesian rating uncertainty (σ = 100 Elo points per team per simulation), the current tournament hierarchy looks roughly like this:</p>
+
+        <ul>
+          <li><strong>Top tier — legitimate contenders:</strong> Argentina, France, Brazil, Spain</li>
+          <li><strong>Second tier — dangerous in a bracket:</strong> Germany, Netherlands, England, Colombia, Mexico, Portugal</li>
+          <li><strong>Third tier — can hurt anyone on a given day:</strong> Switzerland, Morocco, Japan, Ivory Coast, Belgium, Australia</li>
+        </ul>
+
+        <p>The Elo sampling means even Argentina isn't a lock — just a heavy favorite. That's what produces the 44.7% chance for the field.</p>
+
+        <h2>Win Probabilities</h2>
+
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Current pts</th>
+              <th>Win probability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="leader">
+              <td>NH</td><td>18</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:55.3%"></div></div>
+                  <span class="prob-pct">55.3%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>PB2</td><td>14</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:14.4%"></div></div>
+                  <span class="prob-pct">14.4%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>NC</td><td>16</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:12.6%"></div></div>
+                  <span class="prob-pct">12.6%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>BS</td><td>15</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:8.3%"></div></div>
+                  <span class="prob-pct">8.3%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>M&amp;M</td><td>11</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:2.9%"></div></div>
+                  <span class="prob-pct">2.9%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>KR</td><td>12</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:1.7%"></div></div>
+                  <span class="prob-pct">1.7%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>DD</td><td>13</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:1.5%"></div></div>
+                  <span class="prob-pct">1.5%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>ER</td><td>12</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:1%"></div></div>
+                  <span class="prob-pct">1.0%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>PB</td><td>13</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0.9%"></div></div>
+                  <span class="prob-pct">0.9%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>SC</td><td>12</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0.7%"></div></div>
+                  <span class="prob-pct">0.7%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>JR</td><td>13</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0.3%"></div></div>
+                  <span class="prob-pct tiny">0.3%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>MS</td><td>13</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0.2%"></div></div>
+                  <span class="prob-pct tiny">0.2%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>RP</td><td>12</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0.2%"></div></div>
+                  <span class="prob-pct tiny">0.2%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>JF, MC, JH</td><td>≤9</td>
+              <td>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar"><div class="prob-bar-fill" style="width:0%"></div></div>
+                  <span class="prob-pct tiny">&lt;0.1%</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>Rooting Scenarios</h2>
+
+        <h3>PB2 — 14.4% (the closest real threat)</h3>
+        <p>PB2 has two group winners and the cleanest path to catching NH on points. <strong>The ask:</strong> Argentina loses before the quarterfinals — ideally to Spain, which would simultaneously eliminate NH's horse and put PB2's team through. Meanwhile Switzerland needs to win their side of the bracket. The model's most common non-NH winner is a Spain deep run. Spain vs. Argentina in a potential quarterfinal is the dream scenario.</p>
+        <p><strong>Key matches:</strong> Spain vs. Austria (M84), Switzerland vs. Algeria (M85).</p>
+
+        <h3>NC — 12.6%</h3>
+        <p>NC is betting on France, essentially. Bosnia is a bonus. <strong>The ask:</strong> France wins the World Cup. Simple, but France is legitimately positioned — they're the model's #2 team and drew Sweden (JR) in the Round of 32. A France vs. Argentina final would be the group chat's most dramatic outcome.</p>
+        <p><strong>Key match:</strong> France vs. Sweden (M77) sets up the path.</p>
+
+        <h3>BS — 8.3%</h3>
+        <p>BS's advantage is quantity. With three teams alive, every round they survive at least one match almost by default. <strong>The ask:</strong> Brazil goes deep (vs. Japan in R32, manageable), and either Canada or South Africa adds a surprise run. If all three survive to the Round of 16, BS banks serious points even without winning the pool.</p>
+        <p><strong>Free points tonight:</strong> South Africa vs. Canada (M73) — BS advances a team regardless.</p>
+
+        <h3>M&amp;M — 2.9%</h3>
+        <p>Colombia is a genuine dark horse — the model's highest-rated South American team after Argentina. Ecuador adding bonus wins as a 3rd-place qualifier helps. <strong>The ask:</strong> Argentina and France both fall before the semis, then Colombia runs through a weakened bracket. Ecuador beating Mexico (M79) would give M&amp;M an immediate bonus and eliminate MS's only remaining team — a great plot for the first weekend.</p>
+
+        <h3>KR — 1.7%, DD — 1.5%, ER — 1.0%</h3>
+        <p>All three need NH to collapse <em>and</em> their own teams to go deep. England (KR) is a model-rated second-tier threat. Netherlands (DD) and Morocco (ER) face each other in M75, meaning one of those players gets eliminated this week. Japan (ER) vs. Brazil is a long shot but Morocco can hurt anyone.</p>
+
+        <hr>
+
+        <h2>The Uncomfortable Math</h2>
+
+        <p>For anyone other than NH to win this pool, Argentina almost certainly needs to lose — likely before the quarterfinals. The model's projected final score for NH averages 31.9 points. The next-highest averages are PB2 (25.6) and NC (25.5), meaning even in their best-case scenarios, those players need NH to run cold.</p>
+
+        <div class="callout">
+          <p><strong>The must-watch first-round match:</strong> Ivory Coast vs. Norway (M78). Ivory Coast is JF's last team. Norway is NH's second horse. JF desperately needs the win; NH desperately needs it not to happen. The model gives Norway the edge, but Ivory Coast is a legitimate top-30 Elo team. It won't be a walkover.</p>
+        </div>
+
+        <p>Twenty thousand simulated tournaments say the same thing: NH is the heavy favorite, the gap is real, and the only cure is an Argentine defeat.</p>
+
+        <p>The knockout bracket starts today. May your rooting interests be clear, your upsets be specific, and your Argentina takes be unpopular.</p>
+
+        <div class="article-footer">
+          Simulated via Dixon-Coles corrected Poisson model · 20,000 iterations · Bayesian Elo uncertainty σ=100 · Updated June 28, 2026
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
