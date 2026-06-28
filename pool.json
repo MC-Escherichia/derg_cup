@@ -195,6 +195,24 @@
       ]
     },
     {
+      "group": "A",
+      "home": "Czechia",
+      "away": "Mexico",
+      "score": [
+        0,
+        3
+      ]
+    },
+    {
+      "group": "A",
+      "home": "South Africa",
+      "away": "South Korea",
+      "score": [
+        1,
+        0
+      ]
+    },
+    {
       "group": "B",
       "home": "Canada",
       "away": "Bosnia and Herzegovina",
@@ -228,6 +246,24 @@
       "score": [
         6,
         0
+      ]
+    },
+    {
+      "group": "B",
+      "home": "Switzerland",
+      "away": "Canada",
+      "score": [
+        2,
+        1
+      ]
+    },
+    {
+      "group": "B",
+      "home": "Bosnia and Herzegovina",
+      "away": "Qatar",
+      "score": [
+        3,
+        1
       ]
     },
     {
@@ -267,6 +303,24 @@
       ]
     },
     {
+      "group": "C",
+      "home": "Scotland",
+      "away": "Brazil",
+      "score": [
+        0,
+        3
+      ]
+    },
+    {
+      "group": "C",
+      "home": "Morocco",
+      "away": "Haiti",
+      "score": [
+        4,
+        2
+      ]
+    },
+    {
       "group": "D",
       "home": "United States",
       "away": "Paraguay",
@@ -300,6 +354,24 @@
       "score": [
         0,
         1
+      ]
+    },
+    {
+      "group": "D",
+      "home": "Turkey",
+      "away": "United States",
+      "score": [
+        3,
+        2
+      ]
+    },
+    {
+      "group": "D",
+      "home": "Paraguay",
+      "away": "Australia",
+      "score": [
+        0,
+        0
       ]
     },
     {
@@ -339,6 +411,24 @@
       ]
     },
     {
+      "group": "E",
+      "home": "Curaçao",
+      "away": "Ivory Coast",
+      "score": [
+        0,
+        2
+      ]
+    },
+    {
+      "group": "E",
+      "home": "Ecuador",
+      "away": "Germany",
+      "score": [
+        2,
+        1
+      ]
+    },
+    {
       "group": "F",
       "home": "Netherlands",
       "away": "Japan",
@@ -375,6 +465,24 @@
       ]
     },
     {
+      "group": "F",
+      "home": "Japan",
+      "away": "Sweden",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "F",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "score": [
+        1,
+        3
+      ]
+    },
+    {
       "group": "G",
       "home": "Belgium",
       "away": "Egypt",
@@ -399,6 +507,33 @@
       "score": [
         0,
         0
+      ]
+    },
+    {
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "score": [
+        1,
+        3
+      ]
+    },
+    {
+      "group": "G",
+      "home": "Egypt",
+      "away": "Iran",
+      "score": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "score": [
+        1,
+        5
       ]
     },
     {
@@ -438,6 +573,24 @@
       ]
     },
     {
+      "group": "H",
+      "home": "Cape Verde",
+      "away": "Saudi Arabia",
+      "score": [
+        0,
+        0
+      ]
+    },
+    {
+      "group": "H",
+      "home": "Uruguay",
+      "away": "Spain",
+      "score": [
+        0,
+        1
+      ]
+    },
+    {
       "group": "I",
       "home": "France",
       "away": "Senegal",
@@ -453,6 +606,42 @@
       "score": [
         1,
         4
+      ]
+    },
+    {
+      "group": "I",
+      "home": "France",
+      "away": "Iraq",
+      "score": [
+        3,
+        0
+      ]
+    },
+    {
+      "group": "I",
+      "home": "Norway",
+      "away": "Senegal",
+      "score": [
+        3,
+        2
+      ]
+    },
+    {
+      "group": "I",
+      "home": "Norway",
+      "away": "France",
+      "score": [
+        1,
+        4
+      ]
+    },
+    {
+      "group": "I",
+      "home": "Senegal",
+      "away": "Iraq",
+      "score": [
+        5,
+        0
       ]
     },
     {
@@ -474,6 +663,42 @@
       ]
     },
     {
+      "group": "J",
+      "home": "Argentina",
+      "away": "Austria",
+      "score": [
+        2,
+        0
+      ]
+    },
+    {
+      "group": "J",
+      "home": "Jordan",
+      "away": "Algeria",
+      "score": [
+        1,
+        2
+      ]
+    },
+    {
+      "group": "J",
+      "home": "Algeria",
+      "away": "Austria",
+      "score": [
+        3,
+        3
+      ]
+    },
+    {
+      "group": "J",
+      "home": "Jordan",
+      "away": "Argentina",
+      "score": [
+        1,
+        3
+      ]
+    },
+    {
       "group": "K",
       "home": "Portugal",
       "away": "DR Congo",
@@ -489,6 +714,42 @@
       "score": [
         1,
         3
+      ]
+    },
+    {
+      "group": "K",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "score": [
+        5,
+        0
+      ]
+    },
+    {
+      "group": "K",
+      "home": "Colombia",
+      "away": "DR Congo",
+      "score": [
+        1,
+        0
+      ]
+    },
+    {
+      "group": "K",
+      "home": "Colombia",
+      "away": "Portugal",
+      "score": [
+        0,
+        0
+      ]
+    },
+    {
+      "group": "K",
+      "home": "DR Congo",
+      "away": "Uzbekistan",
+      "score": [
+        3,
+        1
       ]
     },
     {
@@ -508,435 +769,269 @@
         1,
         0
       ]
+    },
+    {
+      "group": "L",
+      "home": "England",
+      "away": "Ghana",
+      "score": [
+        0,
+        0
+      ]
+    },
+    {
+      "group": "L",
+      "home": "Panama",
+      "away": "Croatia",
+      "score": [
+        0,
+        1
+      ]
+    },
+    {
+      "group": "L",
+      "home": "Panama",
+      "away": "England",
+      "score": [
+        0,
+        2
+      ]
+    },
+    {
+      "group": "L",
+      "home": "Croatia",
+      "away": "Ghana",
+      "score": [
+        2,
+        1
+      ]
     }
   ],
-  "thirdPlaceOverride": {},
+  "thirdPlaceOverride": {"E":"D","I":"F","A":"E","L":"K","D":"B","G":"I","B":"J","K":"L"},
   "koResults": {},
   "schedule": {
-    "Czechia": [
-      {
-        "date": "2026-06-24",
-        "time": "19:00 UTC-6",
-        "opponent": "Mexico"
-      }
-    ],
-    "Mexico": [
-      {
-        "date": "2026-06-24",
-        "time": "19:00 UTC-6",
-        "opponent": "Czechia"
-      }
-    ],
     "South Africa": [
       {
-        "date": "2026-06-24",
-        "time": "19:00 UTC-6",
-        "opponent": "South Korea"
-      }
-    ],
-    "South Korea": [
-      {
-        "date": "2026-06-24",
-        "time": "19:00 UTC-6",
-        "opponent": "South Africa"
-      }
-    ],
-    "Switzerland": [
-      {
-        "date": "2026-06-24",
+        "date": "2026-06-28",
         "time": "12:00 UTC-7",
         "opponent": "Canada"
       }
     ],
     "Canada": [
       {
-        "date": "2026-06-24",
+        "date": "2026-06-28",
         "time": "12:00 UTC-7",
-        "opponent": "Switzerland"
-      }
-    ],
-    "Bosnia and Herzegovina": [
-      {
-        "date": "2026-06-24",
-        "time": "12:00 UTC-7",
-        "opponent": "Qatar"
-      }
-    ],
-    "Qatar": [
-      {
-        "date": "2026-06-24",
-        "time": "12:00 UTC-7",
-        "opponent": "Bosnia and Herzegovina"
-      }
-    ],
-    "Scotland": [
-      {
-        "date": "2026-06-24",
-        "time": "18:00 UTC-4",
-        "opponent": "Brazil"
-      }
-    ],
-    "Brazil": [
-      {
-        "date": "2026-06-24",
-        "time": "18:00 UTC-4",
-        "opponent": "Scotland"
-      }
-    ],
-    "Morocco": [
-      {
-        "date": "2026-06-24",
-        "time": "18:00 UTC-4",
-        "opponent": "Haiti"
-      }
-    ],
-    "Haiti": [
-      {
-        "date": "2026-06-24",
-        "time": "18:00 UTC-4",
-        "opponent": "Morocco"
-      }
-    ],
-    "Turkey": [
-      {
-        "date": "2026-06-25",
-        "time": "19:00 UTC-7",
-        "opponent": "United States"
-      }
-    ],
-    "United States": [
-      {
-        "date": "2026-06-25",
-        "time": "19:00 UTC-7",
-        "opponent": "Turkey"
-      }
-    ],
-    "Paraguay": [
-      {
-        "date": "2026-06-25",
-        "time": "19:00 UTC-7",
-        "opponent": "Australia"
-      }
-    ],
-    "Australia": [
-      {
-        "date": "2026-06-25",
-        "time": "19:00 UTC-7",
-        "opponent": "Paraguay"
-      }
-    ],
-    "Curaçao": [
-      {
-        "date": "2026-06-25",
-        "time": "16:00 UTC-4",
-        "opponent": "Ivory Coast"
-      }
-    ],
-    "Ivory Coast": [
-      {
-        "date": "2026-06-25",
-        "time": "16:00 UTC-4",
-        "opponent": "Curaçao"
-      }
-    ],
-    "Ecuador": [
-      {
-        "date": "2026-06-25",
-        "time": "16:00 UTC-4",
-        "opponent": "Germany"
+        "opponent": "South Africa"
       }
     ],
     "Germany": [
       {
-        "date": "2026-06-25",
-        "time": "16:00 UTC-4",
-        "opponent": "Ecuador"
+        "date": "2026-06-29",
+        "time": "16:30 UTC-4",
+        "opponent": "Paraguay"
+      }
+    ],
+    "Paraguay": [
+      {
+        "date": "2026-06-29",
+        "time": "16:30 UTC-4",
+        "opponent": "Germany"
+      }
+    ],
+    "Netherlands": [
+      {
+        "date": "2026-06-29",
+        "time": "19:00 UTC-6",
+        "opponent": "Morocco"
+      }
+    ],
+    "Morocco": [
+      {
+        "date": "2026-06-29",
+        "time": "19:00 UTC-6",
+        "opponent": "Netherlands"
+      }
+    ],
+    "Brazil": [
+      {
+        "date": "2026-06-29",
+        "time": "12:00 UTC-5",
+        "opponent": "Japan"
       }
     ],
     "Japan": [
       {
-        "date": "2026-06-25",
-        "time": "18:00 UTC-5",
+        "date": "2026-06-29",
+        "time": "12:00 UTC-5",
+        "opponent": "Brazil"
+      }
+    ],
+    "France": [
+      {
+        "date": "2026-06-30",
+        "time": "17:00 UTC-4",
         "opponent": "Sweden"
       }
     ],
     "Sweden": [
       {
-        "date": "2026-06-25",
-        "time": "18:00 UTC-5",
-        "opponent": "Japan"
-      }
-    ],
-    "Tunisia": [
-      {
-        "date": "2026-06-25",
-        "time": "18:00 UTC-5",
-        "opponent": "Netherlands"
-      }
-    ],
-    "Netherlands": [
-      {
-        "date": "2026-06-25",
-        "time": "18:00 UTC-5",
-        "opponent": "Tunisia"
-      }
-    ],
-    "New Zealand": [
-      {
-        "date": "2026-06-21",
-        "time": "18:00 UTC-7",
-        "opponent": "Egypt"
-      },
-      {
-        "date": "2026-06-26",
-        "time": "20:00 UTC-7",
-        "opponent": "Belgium"
-      }
-    ],
-    "Egypt": [
-      {
-        "date": "2026-06-21",
-        "time": "18:00 UTC-7",
-        "opponent": "New Zealand"
-      },
-      {
-        "date": "2026-06-26",
-        "time": "20:00 UTC-7",
-        "opponent": "Iran"
-      }
-    ],
-    "Iran": [
-      {
-        "date": "2026-06-26",
-        "time": "20:00 UTC-7",
-        "opponent": "Egypt"
-      }
-    ],
-    "Belgium": [
-      {
-        "date": "2026-06-26",
-        "time": "20:00 UTC-7",
-        "opponent": "New Zealand"
-      }
-    ],
-    "Cape Verde": [
-      {
-        "date": "2026-06-26",
-        "time": "19:00 UTC-5",
-        "opponent": "Saudi Arabia"
-      }
-    ],
-    "Saudi Arabia": [
-      {
-        "date": "2026-06-26",
-        "time": "19:00 UTC-5",
-        "opponent": "Cape Verde"
-      }
-    ],
-    "Uruguay": [
-      {
-        "date": "2026-06-26",
-        "time": "18:00 UTC-6",
-        "opponent": "Spain"
-      }
-    ],
-    "Spain": [
-      {
-        "date": "2026-06-26",
-        "time": "18:00 UTC-6",
-        "opponent": "Uruguay"
-      }
-    ],
-    "France": [
-      {
-        "date": "2026-06-22",
-        "time": "17:00 UTC-4",
-        "opponent": "Iraq"
-      },
-      {
-        "date": "2026-06-26",
-        "time": "15:00 UTC-4",
-        "opponent": "Norway"
-      }
-    ],
-    "Iraq": [
-      {
-        "date": "2026-06-22",
+        "date": "2026-06-30",
         "time": "17:00 UTC-4",
         "opponent": "France"
-      },
+      }
+    ],
+    "Ivory Coast": [
       {
-        "date": "2026-06-26",
-        "time": "15:00 UTC-4",
-        "opponent": "Senegal"
+        "date": "2026-06-30",
+        "time": "12:00 UTC-5",
+        "opponent": "Norway"
       }
     ],
     "Norway": [
       {
-        "date": "2026-06-22",
-        "time": "20:00 UTC-4",
-        "opponent": "Senegal"
-      },
-      {
-        "date": "2026-06-26",
-        "time": "15:00 UTC-4",
-        "opponent": "France"
-      }
-    ],
-    "Senegal": [
-      {
-        "date": "2026-06-22",
-        "time": "20:00 UTC-4",
-        "opponent": "Norway"
-      },
-      {
-        "date": "2026-06-26",
-        "time": "15:00 UTC-4",
-        "opponent": "Iraq"
-      }
-    ],
-    "Argentina": [
-      {
-        "date": "2026-06-22",
+        "date": "2026-06-30",
         "time": "12:00 UTC-5",
-        "opponent": "Austria"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "21:00 UTC-5",
-        "opponent": "Jordan"
+        "opponent": "Ivory Coast"
       }
     ],
-    "Austria": [
+    "Mexico": [
       {
-        "date": "2026-06-22",
-        "time": "12:00 UTC-5",
-        "opponent": "Argentina"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "21:00 UTC-5",
-        "opponent": "Algeria"
+        "date": "2026-06-30",
+        "time": "19:00 UTC-6",
+        "opponent": "Ecuador"
       }
     ],
-    "Jordan": [
+    "Ecuador": [
       {
-        "date": "2026-06-22",
-        "time": "20:00 UTC-7",
-        "opponent": "Algeria"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "21:00 UTC-5",
-        "opponent": "Argentina"
-      }
-    ],
-    "Algeria": [
-      {
-        "date": "2026-06-22",
-        "time": "20:00 UTC-7",
-        "opponent": "Jordan"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "21:00 UTC-5",
-        "opponent": "Austria"
-      }
-    ],
-    "Portugal": [
-      {
-        "date": "2026-06-23",
-        "time": "12:00 UTC-5",
-        "opponent": "Uzbekistan"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "19:30 UTC-4",
-        "opponent": "Colombia"
-      }
-    ],
-    "Uzbekistan": [
-      {
-        "date": "2026-06-23",
-        "time": "12:00 UTC-5",
-        "opponent": "Portugal"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "19:30 UTC-4",
-        "opponent": "DR Congo"
-      }
-    ],
-    "Colombia": [
-      {
-        "date": "2026-06-23",
-        "time": "20:00 UTC-6",
-        "opponent": "DR Congo"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "19:30 UTC-4",
-        "opponent": "Portugal"
-      }
-    ],
-    "DR Congo": [
-      {
-        "date": "2026-06-23",
-        "time": "20:00 UTC-6",
-        "opponent": "Colombia"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "19:30 UTC-4",
-        "opponent": "Uzbekistan"
+        "date": "2026-06-30",
+        "time": "19:00 UTC-6",
+        "opponent": "Mexico"
       }
     ],
     "England": [
       {
-        "date": "2026-06-23",
-        "time": "16:00 UTC-4",
-        "opponent": "Ghana"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "17:00 UTC-4",
-        "opponent": "Panama"
+        "date": "2026-07-01",
+        "time": "12:00 UTC-4",
+        "opponent": "DR Congo"
       }
     ],
-    "Ghana": [
+    "DR Congo": [
       {
-        "date": "2026-06-23",
-        "time": "16:00 UTC-4",
+        "date": "2026-07-01",
+        "time": "12:00 UTC-4",
         "opponent": "England"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "17:00 UTC-4",
-        "opponent": "Croatia"
       }
     ],
-    "Panama": [
+    "United States": [
       {
-        "date": "2026-06-23",
+        "date": "2026-07-01",
+        "time": "17:00 UTC-7",
+        "opponent": "Bosnia and Herzegovina"
+      }
+    ],
+    "Bosnia and Herzegovina": [
+      {
+        "date": "2026-07-01",
+        "time": "17:00 UTC-7",
+        "opponent": "United States"
+      }
+    ],
+    "Belgium": [
+      {
+        "date": "2026-07-01",
+        "time": "13:00 UTC-7",
+        "opponent": "Senegal"
+      }
+    ],
+    "Senegal": [
+      {
+        "date": "2026-07-01",
+        "time": "13:00 UTC-7",
+        "opponent": "Belgium"
+      }
+    ],
+    "Portugal": [
+      {
+        "date": "2026-07-02",
         "time": "19:00 UTC-4",
         "opponent": "Croatia"
-      },
-      {
-        "date": "2026-06-27",
-        "time": "17:00 UTC-4",
-        "opponent": "England"
       }
     ],
     "Croatia": [
       {
-        "date": "2026-06-23",
+        "date": "2026-07-02",
         "time": "19:00 UTC-4",
-        "opponent": "Panama"
-      },
+        "opponent": "Portugal"
+      }
+    ],
+    "Spain": [
       {
-        "date": "2026-06-27",
-        "time": "17:00 UTC-4",
+        "date": "2026-07-02",
+        "time": "12:00 UTC-7",
+        "opponent": "Austria"
+      }
+    ],
+    "Austria": [
+      {
+        "date": "2026-07-02",
+        "time": "12:00 UTC-7",
+        "opponent": "Spain"
+      }
+    ],
+    "Switzerland": [
+      {
+        "date": "2026-07-02",
+        "time": "20:00 UTC-7",
+        "opponent": "Algeria"
+      }
+    ],
+    "Algeria": [
+      {
+        "date": "2026-07-02",
+        "time": "20:00 UTC-7",
+        "opponent": "Switzerland"
+      }
+    ],
+    "Argentina": [
+      {
+        "date": "2026-07-03",
+        "time": "18:00 UTC-4",
+        "opponent": "Cape Verde"
+      }
+    ],
+    "Cape Verde": [
+      {
+        "date": "2026-07-03",
+        "time": "18:00 UTC-4",
+        "opponent": "Argentina"
+      }
+    ],
+    "Colombia": [
+      {
+        "date": "2026-07-03",
+        "time": "20:30 UTC-5",
         "opponent": "Ghana"
+      }
+    ],
+    "Ghana": [
+      {
+        "date": "2026-07-03",
+        "time": "20:30 UTC-5",
+        "opponent": "Colombia"
+      }
+    ],
+    "Australia": [
+      {
+        "date": "2026-07-03",
+        "time": "13:00 UTC-5",
+        "opponent": "Egypt"
+      }
+    ],
+    "Egypt": [
+      {
+        "date": "2026-07-03",
+        "time": "13:00 UTC-5",
+        "opponent": "Australia"
       }
     ]
   }
