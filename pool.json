@@ -807,23 +807,25 @@
       ]
     }
   ],
-  "thirdPlaceOverride": {"E":"D","I":"F","A":"E","L":"K","D":"B","G":"I","B":"J","K":"L"},
-  "koResults": {},
+  "thirdPlaceOverride": {
+    "E": "D",
+    "I": "F",
+    "A": "E",
+    "L": "K",
+    "D": "B",
+    "G": "I",
+    "B": "J",
+    "K": "L"
+  },
+  "koResults": {
+    "73": [
+      "South Africa",
+      0,
+      "Canada",
+      1
+    ]
+  },
   "schedule": {
-    "South Africa": [
-      {
-        "date": "2026-06-28",
-        "time": "12:00 UTC-7",
-        "opponent": "Canada"
-      }
-    ],
-    "Canada": [
-      {
-        "date": "2026-06-28",
-        "time": "12:00 UTC-7",
-        "opponent": "South Africa"
-      }
-    ],
     "Germany": [
       {
         "date": "2026-06-29",
