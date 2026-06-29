@@ -630,6 +630,46 @@ def run(n=N_SIMS, json_path=None, history_path=None):
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
         gtables = actual_group_tables()
 
+        # --- KO status: which round each team is in / was eliminated in ------
+        _qual_thirds = set(THIRD_PLACE_OVERRIDE.values()) if THIRD_PLACE_OVERRIDE else set()
+        _ROUND_LABEL = {**{m: "R32" for m in range(73, 89)},
+                        **{m: "R16" for m in range(89, 97)},
+                        **{m: "QF"  for m in range(97, 101)},
+                        **{m: "SF"  for m in range(101, 103)},
+                        103: "3rd", 104: "Final"}
+        _NEXT = {"R32": "R16", "R16": "QF", "QF": "SF", "SF": "Final", "Final": "Champion"}
+
+        ko_st = {}
+        for g, gteams in GROUPS.items():
+            for t in gteams:
+                pl = (gtables.get(t) or {}).get("place", 4)
+                qualified = pl <= 2 or (pl == 3 and g in _qual_thirds)
+                ko_st[t] = {"eliminated": not qualified,
+                             "koRound":   "GS" if not qualified else "R32"}
+
+        for m in sorted(KO_RESULTS.keys()):
+            rec = KO_RESULTS[m]
+            if len(rec) == 5:
+                a, _ga, b, _gb, pen_w = rec
+                w, l = pen_w, (b if pen_w == a else a)
+            else:
+                a, ga, b, gb = rec
+                w, l = (a, b) if ga > gb else (b, a)
+            rnd = _ROUND_LABEL.get(m, "KO")
+            if rnd == "SF":
+                # Loser goes to 3rd-place match — still alive
+                if w in ko_st: ko_st[w]["koRound"] = _NEXT.get(rnd, rnd)
+                if l in ko_st: ko_st[l]["koRound"] = "3rd"
+            elif rnd == "3rd":
+                if w in ko_st: ko_st[w].update({"eliminated": True, "koRound": "3rd"})
+                if l in ko_st: ko_st[l].update({"eliminated": True, "koRound": "4th"})
+            elif rnd == "Final":
+                if w in ko_st: ko_st[w].update({"eliminated": False, "koRound": "Champion"})
+                if l in ko_st: ko_st[l].update({"eliminated": True,  "koRound": "Runner-up"})
+            else:
+                if w in ko_st: ko_st[w]["koRound"] = _NEXT.get(rnd, rnd)
+                if l in ko_st: ko_st[l].update({"eliminated": True, "koRound": rnd})
+
         def team_meta(t):
             meta = dict(gtables.get(t) or {})
             fixtures = SCHEDULE.get(t) or []
@@ -637,6 +677,10 @@ def run(n=N_SIMS, json_path=None, history_path=None):
                 nxt = fixtures[0]
                 meta["nextDate"] = nxt.get("date")
                 meta["nextOpponent"] = nxt.get("opponent")
+            st = ko_st.get(t)
+            if st:
+                meta["eliminated"] = st["eliminated"]
+                meta["koRound"]    = st["koRound"]
             return meta or None
 
         players = []
