@@ -170,6 +170,23 @@
     .play-tag.today { background: #16a34a; }
     .play-tag.tomorrow { background: #d97706; }
 
+    /* Eliminated teams: grey chip + strikethrough name. */
+    .team-badge.eliminated {
+      background: #f0f0f0; opacity: 0.7;
+      box-shadow: none !important;
+    }
+    .team-badge.eliminated .team-name-c { text-decoration: line-through; color: #888; }
+    .team-badge.eliminated .team-flag   { opacity: 0.55; }
+
+    /* KO round badge (active = green, eliminated = grey, champion = gold). */
+    .ko-tag {
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+      padding: 0.12rem 0.35rem; border-radius: 6px; white-space: nowrap; color: #fff;
+    }
+    .ko-tag.active    { background: #16a34a; }
+    .ko-tag.out       { background: #9ca3af; }
+    .ko-tag.champion  { background: #b45309; color: #fef3c7; }
+
     .sparkline { width: 100%; }
     .sparkline svg { width: 100%; height: 44px; display: block; }
 
@@ -396,12 +413,30 @@
             <div className="teams">
               {player.teams.map((team, i) => {
                 const m = (player.teamMeta || [])[i];
-                const when = m && matchDayLabel(m.nextDate);
+                const elim = m && m.eliminated;
+                const koRound = m && m.koRound;
+                // Only show today/tomorrow badge for active teams
+                const when = (!elim && m) ? matchDayLabel(m.nextDate) : null;
                 const title = when && m.nextOpponent
                   ? `Plays ${when} vs ${m.nextOpponent}` : undefined;
+
+                // KO round badge logic
+                let koTag = null;
+                if (koRound === "Champion") {
+                  koTag = <span className="ko-tag champion">🏆 Champ</span>;
+                } else if (elim && koRound && koRound !== "GS") {
+                  koTag = <span className="ko-tag out">{koRound}</span>;
+                } else if (!elim && koRound && koRound !== "R32") {
+                  // Active team that has already cleared at least one KO round
+                  koTag = <span className="ko-tag active">{koRound}</span>;
+                }
+
+                const badgeCls = "team-badge"
+                  + (elim ? " eliminated" : "")
+                  + (!elim && when ? " playing-" + when : "");
+
                 return (
-                  <span className={"team-badge" + (when ? " playing-" + when : "")}
-                        key={team + i} title={title}>
+                  <span className={badgeCls} key={team + i} title={title}>
                     <span className="team-flag">{player.flags[i] || "🏳️"}</span>
                     <span className="team-text">
                       <span className="team-name-c">{team}</span>
@@ -411,11 +446,12 @@
                         </span>
                       )}
                     </span>
-                    {when && (
+                    {when && !elim && (
                       <span className={"play-tag " + when}>
                         {when === "today" ? "Today" : "Tmrw"}
                       </span>
                     )}
+                    {koTag}
                   </span>
                 );
               })}
@@ -535,7 +571,9 @@
               <strong> Current</strong> = so far · <strong>Projected</strong> = simulated average
               <br />
               <span className="play-tag today">Today</span>{" "}
-              <span className="play-tag tomorrow">Tmrw</span> = team's next match is today / tomorrow
+              <span className="play-tag tomorrow">Tmrw</span> = match today / tomorrow ·{" "}
+              <span className="ko-tag active">R16</span> = advancing ·{" "}
+              <span className="ko-tag out">R32</span> = eliminated
             </span>
             <div className="control-groups">
               <SegToggle
